@@ -6,7 +6,7 @@ import { Accordion } from 'react-bootstrap';
 import { Jumbotron } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Carousel } from 'react-bootstrap';
-import '../css/Slider.css';
+import '../Home_pageCSS/Slider.css';
 const Slider = () => {
     return (
         <div class="container1">

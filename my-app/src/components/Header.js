@@ -1,6 +1,10 @@
 import React from 'react';
-import '../css/header.css';
+import '../Home_pageCSS/header.css';
+import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom'; 
+import Login_page from '../Login_page/Login_page';
+import { useHistory } from 'react-router-dom';
 export default function Header() {
+    let history =useHistory();
     return (
         <div>
             <header class="px-3 bg-dark text-white">
@@ -52,8 +56,11 @@ export default function Header() {
                         <input type="search" class="form-control" placeholder="Search..."></input>
                     </form>
                     <div class="text-end">
-                    <button type="button" class="btn btn-outline-light me-2">Login</button>
-                    <button type="button" class="btn btn-warning">Sign-up</button>
+                    <button type="button" class="btn btn-outline-light me-2" onClick={()=>{
+                        history.push('../Login_page');
+                    }}>Login</button>
+                    <button type="button" class="btn btn-warning" onClick={()=>{
+                        history.push('../SignUp_page');}}>Sign-up</button>
                 </div>
                 </div>
             </div>

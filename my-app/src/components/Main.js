@@ -1,7 +1,7 @@
 import React from 'react';
-import Slider from '../components/Slider';
+import Slider from './Slider';
 import Carousel from 'react-elastic-carousel';
-import '../css/Main.css';
+import '../Home_pageCSS/Main.css';
 import image1 from '../assets/images/product2.jpg';
 import image2 from '../assets/images/laptop_zenbook.jpg';
 import image3 from '../assets/images/product1.jpg';
@@ -13,7 +13,7 @@ import image8 from '../assets/images/applewwtch.jpg';
 export default function Main(){
     return (
         <div class="container2">
-             <li class="font">Products</li>
+             <li class="font">Items</li>
             <div class="Contain">
             <Carousel>
                 <main class="grid">
