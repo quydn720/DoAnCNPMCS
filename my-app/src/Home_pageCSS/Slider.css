@@ -4,16 +4,16 @@
 }
 
 .container1{
-    background-color: #222222;
+    /* background-color: #222222; */
 }
 
-h1{
+.container1 h1{
     text-align: center;
     background-color: cyan;
     width: auto;
 }
 
-p{
+.container1 p{
     font-family:Arial, Helvetica, sans-serif;
     font-weight: 100;
     font-stretch: expanded;
@@ -33,6 +33,6 @@ p{
 .contain-banner h1{
     background: linear-gradient(to right, lightblue, cyan, blue);
     font-size: 40px;
-    padding-top: 10px;
+    /* padding-top: 10px; */
     color: white;
 }

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 export default function Header() {
     let history =useHistory();
     return (
-        <div>
+        <div className="header">
             <header class="px-3 bg-dark text-white">
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
