@@ -9,19 +9,20 @@ import { Carousel } from 'react-bootstrap';
 import '../Home_pageCSS/Slider.css';
 const Slider = () => {
     return (
-        <div class="container1">
-         <div class="contain-banner">
-  <h1>Welcome to TI' Store!</h1>
-  <img class="img" src={image1}/>
-   <p>             
-     Come to TI' Store on this occasion to get a 50% discount. 
-  </p>
- 
-  <p>
-    <Button variant="primary">Explore more</Button>
-  </p>
-</div>   
-        </div>
+      <div class="container1">
+        <div class="contain-banner">
+            <h1>Welcome to TI' Store!</h1>
+            <img class="img" src={image1}/>
+            <p>             
+              Come to TI' Store on this occasion to get a 50% discount. 
+            </p>
+          
+            <p>
+              <Button variant="primary">Explore more</Button>
+            </p>
+        </div>   
+      </div>
+      // <div className="container1">slsl</div>
 
     );
 };

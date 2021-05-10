@@ -45,6 +45,8 @@ export default function Main(){
                                 <button>Buy now</button>
                             </div>                      
                    </article>
+                   
+                   
                 </main>
 
                 <main class="grid">
