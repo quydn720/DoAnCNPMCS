@@ -1,20 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
 import React from "react";
-import Header from './components/Header';
-import Main from './components/Main';
-import Footer from './components/Footer';
-import Slider from './components/Slider';
-import Product from './components/Products';
+
+import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom'; 
+import SignUp_page from './SignUp_page/SignUp_page';
+import Login_page from './Login_page/Login_page';
+import Home_pageJS from './Home_pageJS/Home_page';
+import Element from './components/Element__page/Element';
 function App() {
     return ( 
-        <div className="App">
-          <Header/>
-          <Slider/>
-          <Main/>
-          <Product/>
-          <Footer/>
-        </div>
+        <Router>
+          <Route exact path="/" component={Home_pageJS}/>
+          <Route exact path="/Element_page" component={Element}/>
+
+          <Route exact path="/Login_page" component={Login_page}/>
+          <Route exact path="/SignUp_page" component={SignUp_page}/>
+        </Router>
     );
 }
 

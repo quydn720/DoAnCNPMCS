@@ -1,7 +1,7 @@
 import React from 'react';
-import Slider from '../components/Slider';
+import Slider from './Slider';
 import Carousel from 'react-elastic-carousel';
-import '../css/Main.css';
+import '../Home_pageCSS/Main.css';
 import image1 from '../assets/images/product2.jpg';
 import image2 from '../assets/images/laptop_zenbook.jpg';
 import image3 from '../assets/images/product1.jpg';
@@ -10,14 +10,19 @@ import image5 from '../assets/images/iphone12.jpg';
 import image6 from '../assets/images/oppo.jpg';
 import image7 from '../assets/images/airpod.jpg';
 import image8 from '../assets/images/applewwtch.jpg';
+import { useHistory } from 'react-router';
 export default function Main(){
+    let history=useHistory();
+    function handleClick() {
+        history.push("/Element_page");
+      }
     return (
         <div class="container2">
-             <li class="font">Products</li>
+             <li class="font">Items</li>
             <div class="Contain">
             <Carousel>
                 <main class="grid">
-                   <article>
+                   <article onClick={handleClick}>
                        <img src={image1} alt="Image 1"/>
                             <div class="text">
                                 <h3>Mouse</h3>
@@ -45,6 +50,8 @@ export default function Main(){
                                 <button>Buy now</button>
                             </div>                      
                    </article>
+                   
+                   
                 </main>
 
                 <main class="grid">
@@ -79,6 +86,7 @@ export default function Main(){
                 </main>
                 
                 <main class="grid">
+
                    <article>
                        <img src={image1} alt="Image 1"/>
                             <div class="text">
