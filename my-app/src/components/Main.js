@@ -10,14 +10,19 @@ import image5 from '../assets/images/iphone12.jpg';
 import image6 from '../assets/images/oppo.jpg';
 import image7 from '../assets/images/airpod.jpg';
 import image8 from '../assets/images/applewwtch.jpg';
+import { useHistory } from 'react-router';
 export default function Main(){
+    let history=useHistory();
+    function handleClick() {
+        history.push("/Element_page");
+      }
     return (
         <div class="container2">
              <li class="font">Items</li>
             <div class="Contain">
             <Carousel>
                 <main class="grid">
-                   <article>
+                   <article onClick={handleClick}>
                        <img src={image1} alt="Image 1"/>
                             <div class="text">
                                 <h3>Mouse</h3>
@@ -81,6 +86,7 @@ export default function Main(){
                 </main>
                 
                 <main class="grid">
+
                    <article>
                        <img src={image1} alt="Image 1"/>
                             <div class="text">

@@ -10,8 +10,8 @@ import Element from './components/Element__page/Element';
 function App() {
     return ( 
         <Router>
-          {/* <Route exact path="/" component={Home_pageJS}/> */}
-          <Route exact path="/" component={Element}/>
+          <Route exact path="/" component={Home_pageJS}/>
+          <Route exact path="/Element_page" component={Element}/>
 
           <Route exact path="/Login_page" component={Login_page}/>
           <Route exact path="/SignUp_page" component={SignUp_page}/>
