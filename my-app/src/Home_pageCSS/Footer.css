@@ -45,7 +45,7 @@ li{
     margin-bottom: 2em;
 }
 
-.footer-left img{
+.footer-left .image__footer{
     width: 30%;
 }
 
@@ -59,10 +59,17 @@ h2{
     padding-left: 0;
 }
 
-.main-footer li{
+.main-footer .tag{
     line-height: 2em;
+    
 }
 
+
+.footer-right .tag-title{
+    display: inline-block;
+    border-bottom: 2px solid #fff;
+    
+}
 .main-footer a{
     text-decoration: none;
 }

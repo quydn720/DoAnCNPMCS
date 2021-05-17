@@ -23,7 +23,7 @@ function Customer(props) {
             <a href="">Trang chủ </a>
           </span>
           <span>
-            <a href=""> {"->"} Khách hàng</a>
+            <a href=""> {">"} Khách hàng</a>
           </span>
         </div>
       </div>

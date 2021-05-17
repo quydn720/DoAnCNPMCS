@@ -1,15 +1,36 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import './Customer__history.css';
 Customer__history.propTypes = {};
 
 function Customer__history(props) {
   return (
-    <div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque illo non
-      odio ea qui debitis. Optio veritatis quidem dignissimos qui temporibus
-      omnis, cupiditate, quaerat provident asperiores ad odio ex laborum.
+    <div className="Customer__history">
+    <div className="Customer__history__table__column">
+      <li className="Customer__history__table__content">
+        Mã đơn hàng
+      </li>
+
+      <li className="Customer__history__table__content">
+        Ngày mua
+      </li>
+
+      <li className="Customer__history__table__content">
+        Sản phẩm
+      </li>
+
+      <li className="Customer__history__table__content">
+        Tổng tiền
+      </li>
+      
+      <li className="Customer__history__table__content">
+        Trạng thái
+      </li>
     </div>
+    <div className="Customer__history__table__list">
+      
+    </div>
+  </div>
   );
 }
 

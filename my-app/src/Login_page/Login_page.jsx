@@ -2,7 +2,16 @@ import React from 'react';
 import './Login_page.css';
 import image1 from '../assets/images/Vivo.jpg';
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom';
-const Login_page = () => {
+//import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import { Component } from 'react';
+
+/*const responseFacebook = (response)=>{
+    console.log(response);
+    this.setState({
+        isLoggedIn: true
+    })
+}*/
+const Login_page = () =>{
     return (
         <section className="page-container">
             <div className="imgBx">
@@ -40,7 +49,8 @@ const Login_page = () => {
                     </form>
                     <h3>Login with social media</h3>
                     <ul className="sci">
-                        <a href="https://www.facebook.com" url="facebook.com"><i className="fa fa-facebook"></i></a>
+                    <a href="https://www.facebook.com"><i className="fa fa-facebook"></i></a>
+                        
                         <a href="https://www.instagram.com"><i className="fa fa-instagram"></i></a>
                         <a href="https://www.google.com"><i className="fa fa-google"></i></a>
                     </ul>
@@ -48,6 +58,7 @@ const Login_page = () => {
             </div>
         </section>
     );
+   
 };
 
 export default Login_page;
