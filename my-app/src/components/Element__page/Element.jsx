@@ -58,7 +58,7 @@ function Element(props) {
     }
     return (
         <div className="element">
-            <Header></Header>
+            
             <div className="element__detail">
                 <div className="container">
                     <div className="element__detail-tag">
@@ -133,7 +133,7 @@ function Element(props) {
                 </div>
             </div>
             <Main></Main>
-            <Footer></Footer>
+            
         </div>
     );
 }

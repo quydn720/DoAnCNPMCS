@@ -4,7 +4,11 @@ import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-ro
 import Login_page from '../Login_page/Login_page';
 import { useHistory } from 'react-router-dom';
 export default function Header() {
-    let history =useHistory();
+    let history=useHistory();
+    const orders='/Orders_page';
+    function handleClick(a) {
+        history.push(a);
+      }
     return (
         <div className="header">
             <header class="px-3 bg-dark text-white">
@@ -35,7 +39,7 @@ export default function Header() {
                         </li>
 
                         <li>
-                            <a href="#" class="nav-link text-secondary">
+                            <a href="/Orders_page" class="nav-link text-secondary">
                                 Orders
                             </a>
                         </li>
@@ -47,7 +51,7 @@ export default function Header() {
                         </li>
 
                         <li>
-                            <a href="#" class="nav-link text-secondary">
+                            <a href="/Customer_page" class="nav-link text-secondary">
                                 Customers
                             </a>
                         </li>
