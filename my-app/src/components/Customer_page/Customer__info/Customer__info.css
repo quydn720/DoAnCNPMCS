@@ -1,0 +1,19 @@
+.customer__info {
+  background-color: rgba(196, 196, 196, 0.21);
+  margin-bottom: 20px;
+}
+.customer__info form {
+  padding: 10px 40px;
+  text-align: center;
+}
+.customer__info form div {
+  margin: 20px 5px;
+  display: flex;
+  justify-content: space-between;
+}
+.customer__info form div input[type="text"] {
+  /* margin-right: auto; */
+}
+.customer__info button {
+  margin: 0 auto;
+}

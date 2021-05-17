@@ -43,9 +43,12 @@
     max-height: 70px;
     width: 30%;
     object-fit: cover;
+    /* transition: all 0.3s l   inear; */
+    overflow: hidden;
 }
 .element__detail-product .product__image .image__small img:hover{
     cursor: pointer;
+    border: 2px solid black;
 }
 .element__detail-product .product__info{
     font-size: 20px;
@@ -72,6 +75,12 @@
     background-color: #f4101078;
     border-radius: 50px;
     width: 100%;
+    color: white;
+    transition: all 0.3s ease-in-out;
+}
+.element__detail-product .product__info  .add__button:hover{
+    background-color: white;
+    color: #f4101078;
 }
 .element__detail-product .product__guarantee{
     text-align: center;   
@@ -109,6 +118,7 @@
 .wrap__bottom{
     position: relative;
     min-height: 100px;
+    margin-top: 20px;
 }
 .wrap__bottom-info{
     /* position: absolute; */

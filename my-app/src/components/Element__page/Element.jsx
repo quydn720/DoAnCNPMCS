@@ -58,12 +58,12 @@ function Element(props) {
     }
     return (
         <div className="element">
-            <Header></Header>
+            
             <div className="element__detail">
                 <div className="container">
                     <div className="element__detail-tag">
                         <div className="tag__top">
-                            Điện thoại  Điện thoại Samsung
+                            Điện thoại > Điện thoại Samsung
                         </div>
                         <div className="tag__bottom">
                             Điện thoại Samsung Galaxy M51
@@ -133,7 +133,7 @@ function Element(props) {
                 </div>
             </div>
             <Main></Main>
-            <Footer></Footer>
+            
         </div>
     );
 }
