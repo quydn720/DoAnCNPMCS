@@ -9,13 +9,11 @@ import Phone from '../components/Popular_phone';
 const Home_page = () => {
     return (
         <div>
-            <Header/>
             <Slider/>
             <Main/>
             <Product/>
             <Laptop/>
             <Phone/>
-            <Footer/>
         </div>
     );
 };

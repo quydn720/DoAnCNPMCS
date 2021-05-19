@@ -29,7 +29,7 @@ const SignUp_page = () => {
                         </div>
 
                         <div className="inputBx">
-                            <p>Already have an account? <a href="#">npm
+                            <p>Already have an account? <a href="#">
                                 <Link to="../Login_page/"> 
                                 Sign in
                                 </Link>
