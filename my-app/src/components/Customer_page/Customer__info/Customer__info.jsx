@@ -6,6 +6,7 @@ Customer__info.propTypes = {};
 function Customer__info(props) {
   return (
     <div className="customer__info">
+      <h2>Thông tin tài khoản</h2>
       <form action="">
         <div>
           <label htmlFor="name">Họ và tên:</label>

@@ -11,6 +11,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import "./Customer.css";
+import Customer__pass from "./Customer__pass/Customer__pass";
 Customer.propTypes = {};
 
 function Customer(props) {
@@ -52,21 +53,23 @@ function Customer(props) {
                     <div className="item__image">
                       <i class="fa fa-info"></i>
                     </div>
-                    <a href="/Customer_page/info">Thông tin tài khoản</a>
+                    <Link to="/Customer_page/info">Thông tin tài khoản</Link>
                   </li>
                   <li className="action__list-item">
                     <div className="item__image">
                       <i class="fa fa-key"></i>
                     </div>
-                    <a href="">Thay đổi mật khẩu</a>
+                    <Link to="/Customer_page/customer__pass">
+                      Thay đổi mật khẩu
+                    </Link>
                   </li>
                   <li className="action__list-item">
                     <div className="item__image">
                       <i class="fa fa-history"></i>
                     </div>
-                    <a href="/Customer_page/customer__history">
+                    <Link to="/Customer_page/customer__history">
                       Lịch sử mua hàng
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -81,6 +84,11 @@ function Customer(props) {
                   path="/Customer_page/customer__history"
                   component={Customer__history}
                 ></Route>
+                <Route
+                  path="/Customer_page/customer__pass"
+                  component={Customer__pass}
+                ></Route>
+                <Route path="/Customer_page" component={Customer__info}></Route>
               </Switch>
             </div>
           </div>
