@@ -6,16 +6,29 @@ import Slider from '../components/Slider';
 import Product from '../components/Products';
 import Laptop from '../components/Popular_Laptop';
 import Phone from '../components/Popular_phone';
-const Home_page = () => {
-    return (
-        <div>
+import { Component } from 'react';
+import axios from 'axios';
+import connect from 'react-redux';
+class Home_page extends Component {
+   
+    componentDidMount(){
+        axios({
+            method:"GET",
+            url: ''
+        })
+    }
+
+    render(){
+        return (
+            <div>
             <Slider/>
             <Main/>
             <Product/>
             <Laptop/>
             <Phone/>
-        </div>
-    );
+            </div>
+        );
+    }
 };
 
 export default Home_page;

@@ -80,6 +80,7 @@ router.post('/', validator(signUpSchema), function (req, res) {
             let userInfo = {
                 ten_nguoi_dung: req.body.ten_nguoi_dung,
                 ten_tai_khoan: req.body.ten_tai_khoan,
+                mat_khau: req.body.mat_khau,
                 email: req.body.email,
                 dia_chi: req.body.dia_chi || '',
                 so_dien_thoai: req.body.so_dien_thoai || ''
@@ -87,7 +88,7 @@ router.post('/', validator(signUpSchema), function (req, res) {
             db.collection('NguoiDung').doc(userCredential.user.uid)
                 .create(userInfo)
                 .then(() => {
-                    res.json({ success: true, data: userInfo });
+                    res.json({ success: true, isLoggedIn:false, data: userInfo });
                 })
         })
         .catch((err) => {

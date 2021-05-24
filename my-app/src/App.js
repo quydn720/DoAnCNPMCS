@@ -11,11 +11,64 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Orders from './components/Orders_page/Orders';
 import Customer from './components/Customer_page/Customer';
-function App() {
+import Header_auth from './components/Header_auth';
+import axios from 'axios';
+import { Component } from 'react';
+
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state ={
+        success: false
+    };
+}
+Login = e =>{
+   e.preventDefault();
+//   let request = {
+//       ten_tai_khoan: document.getElementById('ten_tai_khoan').value,
+//       mat_khau: document.getElementById('mat_khau').value
+//   }
+//   axios.post("http://localhost:3001/api/auth/login", request)
+//   .then(resp => {
+//     console.log(resp.data);
+//     this.setState({
+//         success: true
+//     });
+
+//     console.log(this.state);
+    
+//   })
+//   .catch(err=>{
+//       console.log(err);
+//   })
+
+    fetch('http://localhost:3001/api/auth/login',{
+        method: "POST",
+        headers: {
+            "Accept" : "application/json",
+            "Content-Type" : "application/json",
+        },
+        body: JSON.stringify({
+            "ten_tai_khoan": document.getElementById('ten_tai_khoan').value,
+            "mat_khau" : document.getElementById('mat_khau').value
+        })
+    }).then((result ) =>{
+        result.json().then((resp)=>{
+            console.log(resp.success);
+            this.setState({
+                success: resp.success
+            })
+        })
+    })
+
+};
+  render()
+  {
+    var {success} = this.state;
     return ( 
         <Router>
       <div>
-        <Header></Header>
+        { (success) ? <Header_auth></Header_auth> : <Header></Header>}
         <Switch>
 
           <Route exact path="/" component={Home_pageJS}/>
@@ -29,6 +82,7 @@ function App() {
       </div>
         </Router>
     );
+  }
 }
 
 export default App;

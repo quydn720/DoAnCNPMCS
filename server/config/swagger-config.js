@@ -12,7 +12,7 @@ const swaggerOptions = {
                 name: '',
                 url: ''
             },
-            servers: ["http://localhost:3000"]
+            servers: ["http://localhost:3001"]
         }
     },
     apis: [appRoot.path + "/routes/api/*.js"]
