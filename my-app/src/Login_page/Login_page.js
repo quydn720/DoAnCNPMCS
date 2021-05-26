@@ -1,18 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login_page.css';
 import image1 from '../assets/images/Vivo.jpg';
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom';
 //import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { Component } from 'react';
-
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import '../Home_pageJS/Home_page';
+import Home_page from '../Home_pageJS/Home_page';
+import { extend } from 'jquery';
 /*const responseFacebook = (response)=>{
     console.log(response);
     this.setState({
         isLoggedIn: true
     })
 }*/
-const Login_page = () =>{
-    return (
+
+class Login_page extends Component{
+    constructor(props){
+        super(props);
+        this.state ={
+            success: false
+        };
+    }
+   Login = e =>{
+       e.preventDefault();
+    //   let request = {
+    //       ten_tai_khoan: document.getElementById('ten_tai_khoan').value,
+    //       mat_khau: document.getElementById('mat_khau').value
+    //   }
+    //   axios.post("http://localhost:3001/api/auth/login", request)
+    //   .then(resp => {
+    //     console.log(resp.data);
+    //     this.setState({
+    //         success: true
+    //     });
+
+    //     console.log(this.state);
+        
+    //   })
+    //   .catch(err=>{
+    //       console.log(err);
+    //   })
+
+        fetch('http://localhost:3001/api/auth/login',{
+            method: "POST",
+            headers: {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json",
+            },
+            body: JSON.stringify({
+                "ten_tai_khoan": document.getElementById('ten_tai_khoan').value,
+                "mat_khau" : document.getElementById('mat_khau').value
+            })
+        }).then((result ) =>{
+            result.json().then((resp)=>{
+                console.log(resp.success);
+                this.setState({
+                    success: resp.success
+                })
+            })
+        })
+
+    };
+    render(){
+        var { success } = this.state;
+        return (
+
+       <div> {  (success) ? <Home_page></Home_page>
+            :
         <section className="page-container">
             <div className="imgBx">
                 <img src={image1}/>
@@ -20,14 +77,14 @@ const Login_page = () =>{
             <div className="contentBx">
                 <div className="formBx">
                     <h2>Sign In</h2>
-                    <form>
+                    <form onSubmit={this.Login}>
                         <div className="inputBx">
                             <h6 className="name">Username </h6>
-                            <input type="text" name=""></input>
+                            <input type="email" name="ten_tai_khoan" id="ten_tai_khoan" ></input>
                         </div>
                         <div className="inputBx">
                             <h6 className="name">Password </h6>
-                            <input type="password" name=""></input>
+                            <input type="password" name="ten_tai_khoan" id="mat_khau" ></input>
                         </div>
                         <div className="remember">
                             <label>
@@ -36,7 +93,7 @@ const Login_page = () =>{
                             </label>
                         </div>
                         <div className="inputBx">
-                            <input type="submit" value="Sign in" name=""/>
+                            <input type="submit" value="Sign in"/>
                         </div>
 
                         <div className="inputBx">
@@ -57,7 +114,12 @@ const Login_page = () =>{
                 </div>
             </div>
         </section>
+        }
+        </div>
     );
+    }
+    
+    
    
 };
 

@@ -52,17 +52,18 @@ router.post('/login', validator(loginSchema), function (req, res) {
     // let email = db.collection('NguoiDung').where
     firebaseApp.auth().signInWithEmailAndPassword(username, password)
         .then(({ user }) => {
+
             user.getIdToken().then((idToken) => {
                 auth.createSessionCookie(idToken, { expiresIn })
                     .then((sessionCookie) => {
                         const options = { maxAge: expiresIn, httpOnly: true };
                         res.cookie("session", sessionCookie, options);
-                        res.json({ success: true, data: { access_token: sessionCookie } });
+                        res.json({ success: true });
                     }, (error) => {
-                        res.status(401).json({ success: false, message: error?.message });
+                        res.status(401).json({ success: false });
                     })
             });
-        }).catch(error => res.json({ success: false, message: error.message }));
+        }).catch(error => res.json({ success: false }));
 });
 
 /**
