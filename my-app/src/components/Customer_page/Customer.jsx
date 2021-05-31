@@ -81,12 +81,12 @@ function Customer(props) {
                   component={Customer__info}
                 ></Route>
                 <Route
-                  path="/Customer_page/customer__history"
-                  component={Customer__history}
-                ></Route>
-                <Route
                   path="/Customer_page/customer__pass"
                   component={Customer__pass}
+                ></Route>
+                <Route
+                  path="/Customer_page/customer__history"
+                  component={Customer__history}
                 ></Route>
                 <Route path="/Customer_page" component={Customer__info}></Route>
               </Switch>
