@@ -116,6 +116,7 @@ router.post('/', validator(signUpSchema), async function (req, res) {
             let userInfo = {
                 ten_nguoi_dung: req.body.ten_nguoi_dung,
                 ten_tai_khoan: req.body.ten_tai_khoan,
+                mat_khau: req.body.mat_khau,
                 email: req.body.email,
                 dia_chi: req.body.dia_chi || '',
                 so_dien_thoai: req.body.so_dien_thoai || '',

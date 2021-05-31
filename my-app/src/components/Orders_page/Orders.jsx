@@ -88,7 +88,7 @@ function Orders(props) {
             </div>
             <div className="">
               <ul className="list__item">
-                {cartItem.map((order) => (
+                {orders.map((order) => (
                   <Order__item
                     key={order.id}
                     order={order}
