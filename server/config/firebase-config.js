@@ -1,12 +1,16 @@
 var admin = require('firebase-admin');
 var serviceAccount = require('../private_key/cnpmcs-4614c-firebase-adminsdk-s3uxo-c8d85e88aa.json');
 var firebase_app = require("firebase/app");
+
+const FieldValue = admin.firestore.FieldValue;
+
+require('firebase/storage');
 require("firebase/auth");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
-
+admin.firestore().settings({ ignoreUndefinedProperties: true });
 var firebaseConfig = {
     apiKey: "AIzaSyAvgxGSbfh5DP0Cb3sV_hSN8dN8tFej8vM",
     authDomain: "cnpmcs-4614c.firebaseapp.com",
@@ -18,5 +22,4 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase_app.initializeApp(firebaseConfig);
-
-module.exports = { db: admin.firestore(), auth: admin.auth(), firebaseApp: firebase_app.default };
+module.exports = { db: admin.firestore(), auth: admin.auth(), firebaseApp: firebase_app.default, FieldValue };

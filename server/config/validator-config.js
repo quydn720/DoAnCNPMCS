@@ -1,5 +1,5 @@
 const Ajv = require("ajv");
-const ajv = new Ajv();
+const ajv = new Ajv({ coerceTypes: true });
 const addFormats = require("ajv-formats");
 
 addFormats(ajv);
@@ -11,6 +11,6 @@ module.exports = function (schema) {
         if (valid)
             next();
         else
-            res.status(500).send({ success: false, message: validate.errors.message });
+            res.status(500).send({ success: false, message: validate.errors?.message ?? validate.errors });
     }
 }
