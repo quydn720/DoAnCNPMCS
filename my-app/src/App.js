@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React from "react";
+import React, { useState,useEffect } from "react";
 
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom'; 
 import SignUp_page from './SignUp_page/SignUp_page';
@@ -15,33 +15,11 @@ import Header_auth from './components/Header_auth';
 import axios from 'axios';
 import { Component } from 'react';
 
-class App extends Component {
-  constructor(props){
-    super(props);
-    this.state ={
-        success: false
-    };
-}
-Login = e =>{
+function App(props) {
+  const [success,setSuccess]=useState(false);
+  
+const Login = e =>{
    e.preventDefault();
-//   let request = {
-//       ten_tai_khoan: document.getElementById('ten_tai_khoan').value,
-//       mat_khau: document.getElementById('mat_khau').value
-//   }
-//   axios.post("http://localhost:3001/api/auth/login", request)
-//   .then(resp => {
-//     console.log(resp.data);
-//     this.setState({
-//         success: true
-//     });
-
-//     console.log(this.state);
-    
-//   })
-//   .catch(err=>{
-//       console.log(err);
-//   })
-
     fetch('http://localhost:3001/api/auth/login',{
         method: "POST",
         headers: {
@@ -55,16 +33,15 @@ Login = e =>{
     }).then((result ) =>{
         result.json().then((resp)=>{
             console.log(resp.success);
-            this.setState({
+            setSuccess({
                 success: resp.success
             })
         })
     })
 
 };
-  render()
-  {
-    var {success} = this.state;
+  
+    // var {success} = success;
     return ( 
         <Router>
       <div>
@@ -82,7 +59,7 @@ Login = e =>{
       </div>
         </Router>
     );
-  }
+  
 }
 
 export default App;

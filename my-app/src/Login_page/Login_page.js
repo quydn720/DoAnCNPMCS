@@ -80,7 +80,7 @@ class Login_page extends Component{
                     <form onSubmit={this.Login}>
                         <div className="inputBx">
                             <h6 className="name">Username </h6>
-                            <input type="email" name="ten_tai_khoan" id="ten_tai_khoan" ></input>
+                            <input type="text" name="ten_tai_khoan" id="ten_tai_khoan" ></input>
                         </div>
                         <div className="inputBx">
                             <h6 className="name">Password </h6>
