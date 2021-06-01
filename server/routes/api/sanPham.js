@@ -21,10 +21,10 @@ const sanPhamUpdateSchema = require('../../schemas/sanPhamUpdateSchema');
  *      tags: [SanPham]
  *      parameters:
  *       - in: query
- *         name: loai_san_pham
+ *         name: ma_loai_san_pham
  *         schema:
  *           type: string
- *         description: Lọc theo loại sản phẩm
+ *         description: Lọc theo mã loại sản phẩm
  *       - in: query
  *         name: gia_tien_min
  *         schema:
@@ -86,7 +86,7 @@ const sanPhamUpdateSchema = require('../../schemas/sanPhamUpdateSchema');
 router.get('/', async (req, res) => {
     var collectionSanPham = db.collection('SanPham');
     if (req.query.loai_san_pham)
-        collectionSanPham = collectionSanPham.where('loai_san_pham', '==', req.query.loai_san_pham);
+        collectionSanPham = collectionSanPham.where('ma_loai_san_pham', '==', req.query.ma_loai_san_pham);
     if (req.query.gia_tien_min)
         collectionSanPham = collectionSanPham.where('gia_tien', '>=', req.query.gia_tien_min);
     if (req.query.gia_tien_max)
@@ -111,7 +111,76 @@ router.get('/', async (req, res) => {
         return res.json({ success: false, message: err.message });
     });
 });
-
+/**
+ * @swagger
+ * /api/san-pham/{id}:
+ *  get:
+ *      summary: Lấy chi tiết sản phẩm
+ *      tags: [SanPham]
+ *      parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           minimum: 1
+ *         description: Mã sản phẩm
+ *      responses:
+ *          200:
+ *              description: Thông tin sản phẩm
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items: 
+ *                              type: object
+ *                              properties:
+ *                                  success:
+ *                                      type: boolean
+ *                                      description: Trạng thái trả về
+ *                                  data:
+ *                                      type: object
+ *                                      properties:
+ *                                          ma_san_pham: 
+ *                                              type: string
+ *                                          ten_san_pham: 
+ *                                              type: string
+ *                                          gia_tien: 
+ *                                              type: number
+ *                                          so_luong_ton_kho:
+ *                                              type: number
+ *                                          loai_san_pham:
+ *                                              type: number
+ *                                          mo_ta: 
+ *                                              type: string
+ *                                          cau_hinh: 
+ *                                              type: string
+ *                                          xuat_xu: 
+ *                                              type: number
+ *                                          ten_thuong_hieu:
+ *                                              type: string
+ *                                          tinh_trang_san_pham:
+ *                                              type: string
+ *                                          thoi_gian_su_dung:
+ *                                              type: number
+ *                                          file:
+ *                                              type: array
+ *                                              item:
+ *                                                  type: string
+ *  
+ */
+router.get('/:id', async (req, res) => {
+    try {
+        var collectionSanPham = db.collection('SanPham');
+        var result = await collectionSanPham.doc(req.params.id).get();
+        if (!result.exists)
+            throw new Error('Không tồn tại sản phẩm.');
+        return res.json({ success: true, data: result.data() });
+    }
+    catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
+});
 /**
  * @swagger
  * /api/san-pham:
@@ -126,6 +195,8 @@ router.get('/', async (req, res) => {
  *                      type: object
  *                      properties:
  *                         ten_san_pham: 
+ *                             type: string
+ *                         ma_loai_san_pham:
  *                             type: string
  *                         gia_tien: 
  *                             type: integer
@@ -199,6 +270,9 @@ router.post('/', validator(sanPhamSchema), async (req, res) => {
         var collectionSanPham = db.collection('SanPham');
         var insertSanPham = {
             ten_san_pham: req.body.ten_san_pham,
+            ma_loai_san_pham: req.body.ma_loai_san_pham,
+            loai_san_pham: (await db.collection('LoaiSanPham')
+                .doc(req.body.ma_loai_san_pham).get()).data().loai_san_pham,
             gia_tien: req.body.gia_tien,
             so_luong: req.body.so_luong,
             mo_ta: req.body.mo_ta || "",
@@ -242,6 +316,8 @@ router.post('/', validator(sanPhamSchema), async (req, res) => {
  *                      type: object
  *                      properties:
  *                         ma_san_pham:
+ *                             type: string
+ *                         ma_loai_san_pham:
  *                             type: string
  *                         ten_san_pham: 
  *                             type: string
@@ -314,6 +390,9 @@ router.put('/', validator(sanPhamUpdateSchema), async (req, res) => {
         var collectionSanPham = db.collection('SanPham');
         var updateSanPham = {
             ten_san_pham: req.body.ten_san_pham,
+            ma_loai_san_pham: req.body.ma_loai_san_pham,
+            loai_san_pham: (await db.collection('LoaiSanPham').
+                doc(req.body.ma_loai_san_pham).get()).data().loai_san_pham,
             gia_tien: req.body.gia_tien,
             so_luong: req.body.so_luong,
             mo_ta: req.body.mo_ta,
@@ -385,7 +464,7 @@ router.put('/', validator(sanPhamUpdateSchema), async (req, res) => {
  *                                          ma_san_pham: 
  *                                              type: string
  */
-router.delete('/', validator(sanPhamUpdateSchema), async (req, res) => {
+router.delete('/', async (req, res) => {
     try {
         var collectionSanPham = db.collection('SanPham');
         await collectionSanPham.doc(req.body.ma_san_pham).delete();

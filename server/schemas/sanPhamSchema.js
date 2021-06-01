@@ -2,6 +2,7 @@ const sanPhamSchema = {
     type: "object",
     properties: {
         ten_san_pham: { type: "string", minLength: 1, maxLength: 200 },
+        ma_loai_san_pham: { type: "string", minLength: 1, maxLength: 200 },
         gia_tien: { type: "integer", minimum: 1, maximum: 99999999999 },
         so_luong: { type: "integer", minimum: 1, maximum: 999999 },
         mo_ta: { type: "string", minLength: 0, maxLength: 1000 },
