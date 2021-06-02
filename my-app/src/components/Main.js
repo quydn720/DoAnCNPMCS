@@ -23,40 +23,40 @@ import { Link } from 'react-router-dom';
         slidesToShow: 3,
         slidesToScroll: 1
       };
-    // const [productList,setProductList]=useState()
-    // useEffect(() => {
-    //     async function fetchData(){
-    //         const requestUrl='http://localhost:3001/api/san-pham'
-    //         const respone= await fetch(requestUrl);
-    //         const responseJson= await respone.json();
-    //         const {data} =responseJson;
-    //         setProductList(data);
-    //         console.log(data)
-    //     }
-    //     fetchData();
-    // }, [])
-    const { data :productList, pending, error}=useFetch(
-        "http://localhost:3001/api/san-pham"
-    )
+    const [productList,setProductList]=useState()
+    useEffect(() => {
+        async function fetchData(){
+            const requestUrl='http://localhost:3001/api/san-pham'
+            const respone= await fetch(requestUrl);
+            const responseJson= await respone.json();
+            const {data} =responseJson;
+            setProductList(data);
+            console.log(data)
+        }
+        fetchData();
+    }, [])
+    // const { data :productList, pending, error}=useFetch(
+    //     "http://localhost:3001/api/san-pham"
+    // )
     return (
         <div class="container2">
              <li class="font">Items</li>
             <div className="container">
                 
                 <Slider {...settings}>
-                    {productList && productList.map(product=>(<div>alo</div>))
-                    //     productList.map(product=>(
-                    //     <Link to={`/Element_page/${product.ma_san_pham}`}>
-                    //         <div className="item__element">
-                    //             <img src={product.file} alt="Image1"/>
-                    //             <div class="text">
-                    //                 <h3>{product.ten_san_pham}</h3>
-                    //                 <p>{product.gia_tien}</p>
-                    //                 <button >Buy now</button>
-                    //             </div>
-                    //         </div>
-                    //     </Link>
-                    // ))
+                    {productList && 
+                        productList.map(product=>(
+                        <Link to={`/Element_page/${product.ma_san_pham}`}>
+                            <div className="item__element">
+                                <img src={product.file} alt="Image1"/>
+                                <div class="text">
+                                    <h3>{product.ten_san_pham}</h3>
+                                    <p>{product.gia_tien}</p>
+                                    <button >Buy now</button>
+                                </div>
+                            </div>
+                        </Link>
+                    ))
                 }
                     
                 </Slider>
