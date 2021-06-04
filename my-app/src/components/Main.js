@@ -31,7 +31,7 @@ import { Link } from 'react-router-dom';
             const responseJson= await respone.json();
             const {data} =responseJson;
             setProductList(data);
-            console.log(data)
+            // console.log(data)
         }
         fetchData();
     }, [])

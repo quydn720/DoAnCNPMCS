@@ -7,17 +7,23 @@ import Slider from "react-slick";
 import { blue, red } from "@material-ui/core/colors";
 import Main from "../Main";
 import useFetch from "../fetch";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 Element.propTypes = {
   post: PropTypes.object,
 };
 
 function Element(props) {
+  const history = useHistory();
+  const routeChange = () => {
+    let path = "/Orders_page";
+    history.push(path);
+  };
   const { id } = useParams();
   const [image, setImage] = useState(
     "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2xvdGhpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
   );
   const [product, setProduct] = useState({});
+  const [orders, setOrder] = useState([]);
   useEffect(() => {
     async function fetchData() {
       const requestUrl = `http://localhost:3001/api/san-pham/${id}`;
@@ -29,16 +35,33 @@ function Element(props) {
     }
     fetchData();
   }, [id]);
-  console.log(product);
-  console.log(product.file);
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("orders")))
+      setOrder(JSON.parse(localStorage.getItem("orders")));
+    else {
+      setOrder([]);
+    }
+    // setImage(product.file && product.file[0]);
+  }, []);
 
+  // JSON.stringify(orders)
+  const handleAddProduct = (e) => {
+    const orders1 = [...orders];
+    orders1.push({
+      id: id,
+      ten_san_pham: product.ten_san_pham,
+      gia_tien: product.gia_tien,
+      count: 1,
+      file: product.file,
+    });
+    setOrder(orders1);
+    localStorage.setItem("orders", JSON.stringify(orders1));
+
+    if (JSON.parse(localStorage.getItem("orders"))) {
+      routeChange();
+    }
+  };
+  // console.log(orders);
   function infoHandle() {
     var info = document.querySelector(".wrap__bottom-info");
     var des = document.querySelector(".wrap__bottom-description");
@@ -78,7 +101,7 @@ function Element(props) {
               <div className="element__detail-product">
                 <div className="product__image">
                   <div className="image__top">
-                    <img src={product.file && product.file[0]}></img>
+                    <img src={image}></img>
                   </div>
                   <ul className="image__small">
                     {product.file != null &&
@@ -113,7 +136,9 @@ function Element(props) {
                     ></button>
                   </div>
                   <div>
-                    <button className="add__button">Thêm vào giỏ hàng</button>
+                    <button className="add__button" onClick={handleAddProduct}>
+                      Thêm vào giỏ hàng
+                    </button>
                   </div>
                 </div>
                 <div className="product__guarantee">
@@ -122,7 +147,6 @@ function Element(props) {
               </div>
             </div>
           </div>
-          {/* // )} */}
 
           <div className="wrap">
             <div className="container">

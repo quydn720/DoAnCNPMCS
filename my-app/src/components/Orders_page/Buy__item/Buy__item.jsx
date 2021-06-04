@@ -12,14 +12,15 @@ Buy__item.defaultProps = {
 };
 
 function Buy__item(props) {
-  const { item, onAdd, cartItem } = props;
+  const { cartItem } = props;
+  // console.log("buy item:", cartItem);
   return (
     <ul className="list__buy">
       {cartItem.map((item) => (
         <li className="buy__item" key={item.id}>
-          <div className="buy__item-name">{item.name}</div>
+          <div className="buy__item-name">{item.ten_san_pham}</div>
           <span>{item.count}</span>
-          <span>{item.count * item.price}$</span>
+          <span>{item.count * item.gia_tien}$</span>
         </li>
       ))}
     </ul>

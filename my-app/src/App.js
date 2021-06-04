@@ -49,12 +49,12 @@ function App(props) {
         { (success) ? <Header_auth></Header_auth> : <Header></Header>}
         <Switch>
 
-          <Route exact path="/" component={Home_pageJS}/>
-          <Route exact path="/Element_page/:id" component={Element}/>
-          <Route path="/Orders_page" component={Orders}></Route>
-          <Route exact path="/Login_page" component={Login_page}/>
-          <Route exact path="/SignUp_page" component={SignUp_page}/>
-          <Route path="/Customer_page" component={Customer}></Route>
+          <Route key="homepage" exact path="/" component={Home_pageJS}/>
+          <Route key="element" exact path="/Element_page/:id" component={Element}/>
+          <Route key="orers" path="/Orders_page" component={Orders}></Route>
+          <Route key="login" exact path="/Login_page" component={Login_page}/>
+          <Route key="signup" exact path="/SignUp_page" component={SignUp_page}/>
+          <Route key="customer" path="/Customer_page" component={Customer}></Route>
         </Switch>
         <Footer></Footer>
       </div>
