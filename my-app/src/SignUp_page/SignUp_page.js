@@ -42,12 +42,12 @@ class SignUp_page extends Component {
                 "Content-Type" : "application/json",
             },
             body: JSON.stringify({
-                "ten_nguoi_dung" : "a",
-                "ten_tai_khoan": document.getElementById('email').value,
+                "ten_nguoi_dung" : document.getElementById('username').value,
+                "ten_tai_khoan": document.getElementById('username').value,
                 "mat_khau" : document.getElementById('password').value,
                 "email" :document.getElementById('email').value,
-                "dia_chi" : "a",
-                "so_dien_thoai": "1234567891"
+                "dia_chi" : "chưa cập nhật",
+                "so_dien_thoai": "12345678910"
             })
         }).then((result ) =>{
             result.json().then((resp)=>{
@@ -72,16 +72,16 @@ class SignUp_page extends Component {
                     <h2>Sign Up</h2>
                     <form onSubmit={this.SignUp}>
                         <div className="inputBx">
-                            <h6 className="name">Username or email </h6>
+                            <h6 className="name">Username</h6>
+                            <input type="text" name="username" id="username"></input>
+                        </div>
+                        <div className="inputBx">
+                            <h6 className="name">Email</h6>
                             <input type="email" name="email" id="email"></input>
                         </div>
                         <div className="inputBx">
-                            <h6 className="name">Password </h6>
+                            <h6 className="name">Password</h6>
                             <input type="password" name="password" id="password"></input>
-                        </div>
-                        <div className="inputBx">
-                            <h6 className="name">Confirm password</h6>
-                            <input type="password" name="C_password" id="C_password"></input>
                         </div>
                         <div className="inputBx">
                             <input type="submit" value="Sign up" name=""/>

@@ -41,12 +41,11 @@ function App(props) {
         })
 
     };
-  
-    
+
     return ( 
         <Router>
       <div>
-        { (success) ? <Header_auth></Header_auth> : <Header></Header>}
+       <Header></Header>
         <Switch>
 
           <Route key="homepage" exact path="/" component={Home_pageJS}/>
@@ -60,7 +59,5 @@ function App(props) {
       </div>
         </Router>
     );
-  
 }
-
 export default App;
