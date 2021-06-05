@@ -14,7 +14,9 @@ import Customer from './components/Customer_page/Customer';
 import Header_auth from './components/Header_auth';
 import axios from 'axios';
 import { Component } from 'react';
+import { extend } from 'jquery';
 
+<<<<<<< Updated upstream
 class App extends Component {
   constructor(props){
     super(props);
@@ -65,10 +67,16 @@ Login = e =>{
   render()
   {
     var {success} = this.state;
+=======
+function App(){
+    //const [success,setSuccess]=useState(false);
+    //const [isLogin,setIslogin] = useState(localStorage.getItem("access_token")!=null);
+    
+>>>>>>> Stashed changes
     return ( 
         <Router>
       <div>
-        { (success) ? <Header_auth></Header_auth> : <Header></Header>}
+       <Header></Header>
         <Switch>
 
           <Route exact path="/" component={Home_pageJS}/>
@@ -82,7 +90,12 @@ Login = e =>{
       </div>
         </Router>
     );
+<<<<<<< Updated upstream
   }
+=======
+    
+  
+>>>>>>> Stashed changes
 }
 
 export default App;

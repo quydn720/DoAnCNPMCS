@@ -3,7 +3,7 @@ import '../Home_pageCSS/Header_auth.css';
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom'; 
 import Login_page from '../Login_page/Login_page';
 import { useHistory } from 'react-router-dom';
-export default function Header() {
+const Header_auth = () => {
     let history=useHistory();
     const orders='/Orders_page';
     function handleClick(a) {
@@ -11,7 +11,7 @@ export default function Header() {
       }
     return (
         <div className="header_auth">
-            <header class="px-3 bg-dark text-white">
+            {/* <header class="px-3 bg-dark text-white">
             <div class="container_auth">
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
@@ -57,13 +57,15 @@ export default function Header() {
                         </li>
                     </ul>
                     <form class="col-12 col-lg auto mb-3 mb-lg-0 me-lg-3">
-                        <input type="search" class="form-control" placeholder="Search..."></input>
+                        <input type="search" class="form-auth-control" placeholder="Search..."></input>
                     </form>
                 </div>
             </div>
-        </header> 
+        </header>  */}
                 
-                
+        Hello
         </div>  
     );
 };
+
+export default Header_auth;
