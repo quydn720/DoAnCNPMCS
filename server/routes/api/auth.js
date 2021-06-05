@@ -76,6 +76,7 @@ router.post('/login', validator(loginSchema), function (req, res) {
                 .then(({ user }) => {
                     user.getIdToken().then((idToken) => {
                         auth.createSessionCookie(idToken, { expiresIn })
+                        
                             .then((sessionCookie) => {
                                 const options = { maxAge: expiresIn, httpOnly: true };
                                 res.cookie("session", sessionCookie, options);
