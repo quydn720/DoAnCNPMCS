@@ -47,7 +47,6 @@ router.post('/login', validator(loginSchema), function (req, res) {
 
     let username = req.body.ten_tai_khoan;
     let password = req.body.mat_khau;
-<<<<<<< Updated upstream
 
     const expiresIn = 60 * 60 * 24 * 5 * 1000;
     // let email = db.collection('NguoiDung').where
@@ -65,7 +64,6 @@ router.post('/login', validator(loginSchema), function (req, res) {
                     })
             });
         }).catch(error => res.json({ success: false }));
-=======
     db.collection('NguoiDung').where('ten_tai_khoan', '==', username).select('email').get().then((querySnapshot) => {
         if (querySnapshot.empty)
             return res.json({ success: false, message: 'Wrong username or password' });
@@ -88,7 +86,6 @@ router.post('/login', validator(loginSchema), function (req, res) {
                 }).catch(error => res.json({ success: false, message: error.message }));
         }
     });
->>>>>>> Stashed changes
 });
 
 /**
