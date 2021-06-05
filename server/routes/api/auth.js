@@ -50,20 +50,6 @@ router.post('/login', validator(loginSchema), function (req, res) {
 
     const expiresIn = 60 * 60 * 24 * 5 * 1000;
     // let email = db.collection('NguoiDung').where
-    firebaseApp.auth().signInWithEmailAndPassword(username, password)
-        .then(({ user }) => {
-
-            user.getIdToken().then((idToken) => {
-                auth.createSessionCookie(idToken, { expiresIn })
-                    .then((sessionCookie) => {
-                        const options = { maxAge: expiresIn, httpOnly: true };
-                        res.cookie("session", sessionCookie, options);
-                        res.json({ success: true });
-                    }, (error) => {
-                        res.status(401).json({ success: false });
-                    })
-            });
-        }).catch(error => res.json({ success: false }));
     db.collection('NguoiDung').where('ten_tai_khoan', '==', username).select('email').get().then((querySnapshot) => {
         if (querySnapshot.empty)
             return res.json({ success: false, message: 'Wrong username or password' });
