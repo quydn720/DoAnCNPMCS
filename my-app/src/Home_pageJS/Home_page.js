@@ -10,7 +10,12 @@ import { Component } from 'react';
 import axios from 'axios';
 import connect from 'react-redux';
 class Home_page extends Component {
-   
+   constructor(props){
+       super(props);
+       this.state = {
+           
+       }
+   }
     componentDidMount(){
         axios({
             method:"GET",

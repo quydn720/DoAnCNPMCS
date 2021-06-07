@@ -1,143 +1,178 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import "./Element.css"
-import Header from '../Header';
-import Footer from '../Footer';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import "./Element.css";
+import Header from "../Header";
+import Footer from "../Footer";
 import Slider from "react-slick";
-import { blue, red } from '@material-ui/core/colors';
-import Main from '../Main';
+import { blue, red } from "@material-ui/core/colors";
+import Main from "../Main";
+import useFetch from "../fetch";
+import { useHistory, useParams } from "react-router-dom";
 Element.propTypes = {
-    
+  post: PropTypes.object,
 };
 
 function Element(props) {
-    const [image,setImage]=useState('https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2xvdGhpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');
-    function handleImage(e){
-        console.log(e.target.src);
-        setImage(e.target.src)
+  const history = useHistory();
+  const routeChange = () => {
+    let path = "/Orders_page";
+    history.push(path);
+  };
+  const { id } = useParams();
+  const [image, setImage] = useState(
+    "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2xvdGhpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+  );
+  const [product, setProduct] = useState({});
+  const [orders, setOrder] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      const requestUrl = `http://localhost:3001/api/san-pham/${id}`;
+      const respone = await fetch(requestUrl);
+      const responseJson = await respone.json();
+      const { data } = responseJson;
+      setProduct(data);
+      // console.log(data)
     }
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-      };
-      
-    function infoHandle(){
-          var info= document.querySelector('.wrap__bottom-info');
-          var des=document.querySelector('.wrap__bottom-description')
-        if(des.classList.contains('visible'))
-        {
-            des.classList.remove('visible');
-        }
-          if(info.classList.contains('visible'))
-          {
-
-          }
-          else{
-                info.classList.toggle('visible')
-            }
-          console.log(info);
+    fetchData();
+  }, [id]);
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("orders")))
+      setOrder(JSON.parse(localStorage.getItem("orders")));
+    else {
+      setOrder([]);
     }
-    function desHandle(){
-        var info= document.querySelector('.wrap__bottom-info');
-        var des=document.querySelector('.wrap__bottom-description')
-          if(info.classList.contains('visible'))
-          {
-              info.classList.remove('visible');
-          }
-        if(des.classList.contains('visible'))
-        {
+    // setImage(product.file && product.file[0]);
+  }, []);
 
-        }
-        else{
-              des.classList.toggle('visible')
-          }
-        // console.log(des);
+  // JSON.stringify(orders)
+  const handleAddProduct = (e) => {
+    const orders1 = [...orders];
+    orders1.push({
+      id: id,
+      ten_san_pham: product.ten_san_pham,
+      gia_tien: product.gia_tien,
+      count: 1,
+      file: product.file,
+    });
+    setOrder(orders1);
+    localStorage.setItem("orders", JSON.stringify(orders1));
+
+    if (JSON.parse(localStorage.getItem("orders"))) {
+      routeChange();
     }
-    return (
-        <div className="element">
-            
-            <div className="element__detail">
-                <div className="container">
-                    <div className="element__detail-tag">
-                        <div className="tag__top">
-                            Điện thoại {">"} Điện thoại Samsung
-                        </div>
-                        <div className="tag__bottom">
-                            Điện thoại Samsung Galaxy M51
-                        </div>
-
-                    </div>
-                    <div className="element__detail-product">
-                        <div className="product__image">
-                            <div className="image__top">
-                                <img src={image}></img>
-                            </div>
-                            <ul className="image__small">
-                                <img  onClick={handleImage}className="image__small-element" src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2xvdGhpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="" />
-                                <img onClick={handleImage} src="https://images.unsplash.com/photo-1516762689617-e1cffcef479d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2xvdGhpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="" />
-                                <img onClick={handleImage} src="https://images.unsplash.com/photo-1524275539700-cf51138f679b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGNsb3RoaW5nfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="" />
-                            </ul>
-                        </div>
-                        <div className="product__info">
-                            <div>Giá:</div>
-                            <div>Tình trạng:</div>
-                            <div className="information">Thông tin:</div>
-                            <div className="product__info-color">
-                                <span>Màu:</span>
-                                <button className="grey color" style={{backgroundColor: "blue"}}>
-                                </button>
-                                <button className="white color" style={{backgroundColor:"red"}}></button>
-                                <button className="red color" style={{backgroundColor:"grey"}}></button>
-                            </div>
-                            <div>
-
-                            <button className="add__button">Thêm vào giỏ hàng</button>
-                            </div>
-                        </div>
-                        <div className="product__guarantee">
-                            <div>Bảo hành và dịch vụ</div>
-                        </div>
-                    </div>
+  };
+  // console.log(orders);
+  function infoHandle() {
+    var info = document.querySelector(".wrap__bottom-info");
+    var des = document.querySelector(".wrap__bottom-description");
+    if (des.classList.contains("visible")) {
+      des.classList.remove("visible");
+    }
+    if (info.classList.contains("visible")) {
+    } else {
+      info.classList.toggle("visible");
+    }
+    console.log(info);
+  }
+  function desHandle() {
+    var info = document.querySelector(".wrap__bottom-info");
+    var des = document.querySelector(".wrap__bottom-description");
+    if (info.classList.contains("visible")) {
+      info.classList.remove("visible");
+    }
+    if (des.classList.contains("visible")) {
+    } else {
+      des.classList.toggle("visible");
+    }
+    // console.log(des);
+  }
+  return (
+    <div className="element">
+      {product && (
+        <div>
+          <div className="element__detail">
+            <div className="container">
+              <div className="element__detail-tag">
+                <div className="tag__top">
+                  Điện thoại {">"} Điện thoại Samsung
                 </div>
-            </div>
-            
-            {/* <div className="element__info">
-                
-            </div>
-            <div className="element__description"></div> */}
-            <div className="wrap">
-                <div className="container">
-                    <div className="wrap__top">
-                        <div className="demo">
-                            <div className="demo__info" onClick={infoHandle}>
-                                Thông tin sản phẩm
-                            </div>
-                            <div className="demo__description" onClick={desHandle}>
-                                Mô tả sản phẩm
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="wrap__bottom">
-                        <div className="wrap__bottom-info visible">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. At ratione nemo quaerat ex rerum adipisci quod modi illo aperiam voluptatem. Accusamus rem molestiae dolores magnam ea labore eaque unde eos?
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus est officia, vitae molestias doloremque error soluta beatae cumque, nihil minima quo! Perferendis aperiam aut sapiente eaque praesentium repudiandae, ratione facilis.
-                        </div>
-                        <div className="wrap__bottom-description">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam tempore omnis fuga molestias dolorum aliquam hic, optio esse rem minus quis eos recusandae! Tempore consectetur earum possimus. Adipisci, culpa illo!
-                        </div>
-                    </div>
+                <div className="tag__bottom">Điện thoại Samsung Galaxy M51</div>
+              </div>
+              <div className="element__detail-product">
+                <div className="product__image">
+                  <div className="image__top">
+                    <img src={image}></img>
+                  </div>
+                  <ul className="image__small">
+                    {product.file != null &&
+                      product.file.map((file, index) => (
+                        <img
+                          onClick={() => setImage(product.file[index])}
+                          className="image__small-element"
+                          src={product.file && product.file[index]}
+                          alt=""
+                        />
+                      ))}
+                  </ul>
                 </div>
+                <div className="product__info">
+                  <h3>{product.ten_san_pham}</h3>
+                  <div>Giá:{product.gia_tien}</div>
+                  <div>Tình trạng:{product.tinh_trang_san_pham}</div>
+                  <div className="information">Thông tin:</div>
+                  <div className="product__info-color">
+                    <span>Màu:</span>
+                    <button
+                      className="grey color"
+                      style={{ backgroundColor: "blue" }}
+                    ></button>
+                    <button
+                      className="white color"
+                      style={{ backgroundColor: "red" }}
+                    ></button>
+                    <button
+                      className="red color"
+                      style={{ backgroundColor: "grey" }}
+                    ></button>
+                  </div>
+                  <div>
+                    <button className="add__button" onClick={handleAddProduct}>
+                      Thêm vào giỏ hàng
+                    </button>
+                  </div>
+                </div>
+                <div className="product__guarantee">
+                  <div>Bảo hành và dịch vụ</div>
+                </div>
+              </div>
             </div>
-            <Main></Main>
-            
+          </div>
+
+          <div className="wrap">
+            <div className="container">
+              <div className="wrap__top">
+                <div className="demo">
+                  <div className="demo__info" onClick={infoHandle}>
+                    Thông tin sản phẩm
+                  </div>
+                  <div className="demo__description" onClick={desHandle}>
+                    Mô tả sản phẩm
+                  </div>
+                </div>
+              </div>
+              <div className="wrap__bottom">
+                <div className="wrap__bottom-info visible">
+                  {product.cau_hinh}
+                </div>
+                <div className="wrap__bottom-description">{product.mo_ta}</div>
+              </div>
+            </div>
+          </div>
         </div>
-    );
+      )}
+      <Main></Main>
+    </div>
+  );
 }
-
-
 
 export default Element;

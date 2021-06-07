@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import '../Home_pageJS/Home_page';
 import Home_page from '../Home_pageJS/Home_page';
+import Orders_page from '../components/Orders_page/Orders';
 import { extend } from 'jquery';
 /*const responseFacebook = (response)=>{
     console.log(response);
@@ -21,9 +22,12 @@ class Login_page extends Component{
     constructor(props){
         super(props);
         this.state ={
-            success: false
+            access_token: "",
+            success: false,
+            isLogin: localStorage.getItem("access_token") != null
         };
     }
+    
    Login = e =>{
        e.preventDefault();
     //   let request = {
@@ -56,19 +60,27 @@ class Login_page extends Component{
             })
         }).then((result ) =>{
             result.json().then((resp)=>{
-                console.log(resp.success);
-                this.setState({
-                    success: resp.success
-                })
+                if(resp.success)
+                {
+                    alert("SUCCESS!!!")
+                    localStorage.setItem("access_token", resp.access_token);
+                    console.log(resp.access_token);
+                    this.setState({
+                        success: resp.success,
+                        isLogin: true
+                    })
+                }
+                else{
+                    alert("Username or password wrong!!!")
+                }
             })
         })
 
     };
     render(){
-        var { success } = this.state;
         return (
 
-       <div> {  (success) ? <Home_page></Home_page>
+       <div> {  this.state.isLogin ? <Home_page key={this.state.isLogin}/>
             :
         <section className="page-container">
             <div className="imgBx">
@@ -80,7 +92,7 @@ class Login_page extends Component{
                     <form onSubmit={this.Login}>
                         <div className="inputBx">
                             <h6 className="name">Username </h6>
-                            <input type="email" name="ten_tai_khoan" id="ten_tai_khoan" ></input>
+                            <input type="text" name="ten_tai_khoan" id="ten_tai_khoan" ></input>
                         </div>
                         <div className="inputBx">
                             <h6 className="name">Password </h6>

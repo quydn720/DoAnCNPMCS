@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Header from "../Header";
 import Footer from "../Footer";
@@ -12,57 +12,42 @@ import {
 import "./Orders.css";
 import Order__item from "./Order__item/Order__item";
 import Buy__item from "./Buy__item/Buy__item";
-Orders.propTypes = {};
+Orders.propTypes = {
+  orders: PropTypes.array,
+};
+Orders.defaultProps = {
+  orders: [],
+};
 
 function Orders(props) {
-  var orders = [
-    {
-      id: 1,
-      name: "May tinh",
-      price: 2000,
-      count: 0,
-      url:
-        "https://images.unsplash.com/photo-1593642702909-dec73df255d7?ixid=MnwxMjA3fDF8MHxzZWFyY2h8OHx8bGFwdG9wfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      id: 2,
-      name: "May may",
-      price: 2000,
-      count: 0,
-      url:
-        "https://images.unsplash.com/photo-1593642702909-dec73df255d7?ixid=MnwxMjA3fDF8MHxzZWFyY2h8OHx8bGFwdG9wfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    },
-  ];
-  const [cartItem, setCartItem] = useState([]);
-  // const []
-  var list = [];
-  function onAdd(id, check, product) {
-    const exist = cartItem.find((x) => x.id === id);
-    if (exist) {
-      console.log(exist.count);
-      setCartItem(
-        cartItem.map((x) =>
-          x.id === id ? { ...exist, count: exist.count + 1 } : x
-        )
-      );
-    } else {
-      setCartItem([...cartItem, { ...product, count: 1 }]);
+  const [orders, setOrders] = useState([]);
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("orders")))
+      setOrders(JSON.parse(localStorage.getItem("orders")));
+    else {
+      setOrders([]);
     }
+    // setImage(product.file && product.file[0]);
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("orders", JSON.stringify(orders));
+  });
+  const [cartItem, setCartItem] = useState([]);
+
+  function onAdd(id, product) {
+    setCartItem([...cartItem, { ...product }]);
   }
   function onRemove(id, product) {
-    console.log(cartItem);
+    const cartItem1 = [...cartItem];
     const exist = cartItem.find((x) => x.id === id);
     if (exist) {
-      if (exist.count === 1) {
-        setCartItem(cartItem.filter((x) => x.id !== id));
-      } else {
-        setCartItem(
-          cartItem.map((x) =>
-            x.id === id ? { ...exist, count: exist.count - 1 } : x
-          )
-        );
-      }
+      setCartItem(cartItem.filter((x) => x.id !== id));
     }
+  }
+  function onDelete(id) {
+    // console.log(id);
+    setOrders(orders.filter((order) => order.id !== id));
+    localStorage.setItem("orders", JSON.stringify(orders));
   }
   return (
     <div className="orders">
@@ -92,8 +77,9 @@ function Orders(props) {
                   <Order__item
                     key={order.id}
                     order={order}
-                    onChosen={onAdd}
+                    onAdd={onAdd}
                     onRemove={onRemove}
+                    onDelete={onDelete}
                   ></Order__item>
                 ))}
               </ul>
@@ -118,7 +104,7 @@ function Orders(props) {
               <div className="list__total-right">
                 <h2>
                   {cartItem.reduce((acc, currentValue) => {
-                    return acc + currentValue.price * currentValue.count;
+                    return acc + currentValue.gia_tien * currentValue.count;
                   }, 0)}
                 </h2>
                 <span>Đã bao gồm thuế VAT</span>

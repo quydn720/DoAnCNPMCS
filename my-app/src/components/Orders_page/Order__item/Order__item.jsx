@@ -14,40 +14,66 @@ Order__item.propTypes = {
 
 function Order__item(props) {
   // const [check, setCheck] = useState(false);
-  const { order, onChosen, onRemove } = props;
+  const { order, onAdd, onRemove, onDelete } = props;
+  const [order1, setOrder1] = useState(order);
+  // function handleCheck(e) {
+  //   const a = order.id;
+  //   onChosen(a, e.target.checked, order);
+  // }
+  function check(e) {
+    const a = order1.id;
+    console.log(a);
+    if (e.target.checked) {
+      onAdd(a, order1);
+    } else {
+      onRemove(a, order1);
+    }
+  }
 
-  function handleCheck(e) {
-    const a = order.id;
-    onChosen(a, e.target.checked, order);
+  const handleCountMinus = (e) => {
+    // if(order1.count)
+    setOrder1({ ...order1, count: order1.count - 1 });
+  };
+  function handleCountPlus(e) {
+    setOrder1({ ...order1, count: order1.count + 1 });
   }
-  function handleRemove(e) {
-    const a = order.id;
-    onRemove(a, order);
-  }
+  const handleDelete = () => {
+    onDelete(order1.id);
+  };
   return (
     <li className="list__item-product">
       <div className="product__delete">
-        <button>X</button>
+        <button onClick={handleDelete}>X</button>
       </div>
       <div className="list__item-wrap">
         <div className="product__info">
-          <input className="product__check" type="checkbox"></input>
+          <input
+            className="product__check"
+            type="checkbox"
+            onChange={check}
+          ></input>
           <div className="product__image">
-            <img className="img" src={order.url}></img>
+            <img className="img" src={order1.file && order1.file[0]}></img>
           </div>
-          <div>{order.name}</div>
+          <div>{order1.ten_san_pham}</div>
         </div>
-        <span className="product__price">{order.price}$</span>
+        <span className="product__price">{order1.gia_tien}$</span>
         <div className="product__num-wrap">
-          <button className="add__button" onClick={handleRemove}>
+          <button
+            className="add__button"
+            onClick={handleCountMinus}
+            disabled={order1.count <= 0}
+          >
             -
           </button>
-          <span className="product__num">{order.count}</span>
-          <button className="sub__button" onClick={handleCheck}>
+          <span className="product__num">{order1.count}</span>
+          <button className="sub__button" onClick={handleCountPlus}>
             +
           </button>
         </div>
-        <span className="product__total">{order.price * order.count}$</span>
+        <span className="product__total">
+          {order1.gia_tien * order1.count}$
+        </span>
       </div>
     </li>
   );
