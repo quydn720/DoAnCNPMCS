@@ -61,14 +61,14 @@ const sanPhamUpdateSchema = require('../../schemas/sanPhamUpdateSchema');
  *              content:
  *                  application/json:
  *                      schema:
- *                          type: array
- *                          items: 
- *                              type: object
- *                              properties:
- *                                  success:
- *                                      type: boolean
- *                                      description: Trạng thái trả về
- *                                  data:
+ *                          type: object
+ *                          properties:
+ *                              success:
+ *                                  type: boolean
+ *                                  description: Trạng thái trả về
+ *                              data:
+ *                                  type: array
+ *                                  items:
  *                                      type: object
  *                                      properties:
  *                                          ma_san_pham: 

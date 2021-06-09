@@ -134,4 +134,32 @@ router.post('/', validator(signUpSchema), async function (req, res) {
         })
 });
 
+/**
+ * @swagger
+ * /api/nguoi-dung/doi-mat-khau:
+ *  put:
+ *      summary: Đổi mật khẩu
+ *      tags: [NguoiDung]
+ *      responses:
+ *          200:
+ *              description: Trạng thái trả về
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              success:
+ *                                  type: boolean
+ *                                  description: Trạng thái trả về
+ * 
+ */
+router.put('/doi-mat-khau', ensureAuthenticated, async (req, res) => {
+    try {
+        firebaseApp.auth().sendPasswordResetEmail(req.user.email);
+        return res.json({ success: true });
+    }
+    catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
+});
 module.exports = router;
