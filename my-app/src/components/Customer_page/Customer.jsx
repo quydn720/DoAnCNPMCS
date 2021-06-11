@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Customer__info from "./Customer__info/Customer__info";
 import Customer__history from "./Customer__history/Customer__history";
@@ -12,19 +12,32 @@ import {
 } from "react-router-dom";
 import "./Customer.css";
 import Customer__pass from "./Customer__pass/Customer__pass";
+import axios from "axios";
 Customer.propTypes = {};
-
 function Customer(props) {
+  const [account, setAccount] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      if (localStorage.getItem('access_token') != null) {
+        axios.get('http://localhost:3001/api/nguoi-dung/thong-tin', { withCredentials: true }).then((res) => {
+          console.log(res.data)
+          setAccount(res.data.data);
+
+        })
+      }
+    }
+    fetchData();
+  }, []);
   return (
     // <Router>
     <div className="customer">
       <div className="customer__banner">
         <div className="container">
           <span>
-            <a href="">Trang chủ </a>
+            <a href="/">Trang chủ </a>
           </span>
           <span>
-            <a href=""> {">"} Khách hàng</a>
+            <a href="/Customer_page"> {">"} Khách hàng</a>
           </span>
         </div>
       </div>
@@ -40,7 +53,7 @@ function Customer(props) {
                   />
                 </div>
                 <div className="top__info">
-                  <div className="top__info-name">Pham Ngoc Anh Tin</div>
+                  <div className="top__info-name">{account.ten_tai_khoan}</div>
                   <div className="top__info-edit">
                     <i></i>
                     <span>Sửa thông tin</span>
