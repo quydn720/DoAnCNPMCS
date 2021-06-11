@@ -28,26 +28,25 @@ const Products = () => {
             <div className="container">
                 <Slider {...setting1} >
                     {productList && productList.map(product=>(
-                                                <Link to={`/Element_page/${product.ma_san_pham}`}>
-
+                    <Link to={`/Element_page/${product.ma_san_pham}`}>
                         <div className="card" id={product.ma_san_pham}>
-                        <div classname="title">
-                            <h5>
-                                {product.ten_san_pham}
-                            </h5>
+                            <div classname="title">
+                                <h5>
+                                    {product.ten_san_pham}
+                                </h5>
+                            </div>
+                            <div classname="img">
+                                <img src={product.file&&product.file[0]}></img>
+                            </div>
+                            <div className="text">
+                                {
+                                    product.gia_tien
+                                }
+                            </div>
+                            <button className="btbuy">
+                                Buy Now
+                            </button>
                         </div>
-                        <div classname="img">
-                            <img src={product.file&&product.file[0]}></img>
-                        </div>
-                        <div className="text">
-                            {
-                                product.gia_tien
-                            }
-                        </div>
-                        <button className="btbuy">
-                            Buy Now
-                        </button>
-                    </div>
                     </Link>
                     ))}
                 </Slider>

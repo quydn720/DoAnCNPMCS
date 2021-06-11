@@ -24,13 +24,7 @@ function App(props) {
           setSuccess({
             success: true
           })
-<<<<<<< HEAD
-          
-        })
-        .catch(error => console.log('error', error));
-=======
         }
->>>>>>> 0ea53c607753b9ddd6a6f883f8ca06e157f6b169
       }
       Data();
     },[])
