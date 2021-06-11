@@ -4,10 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
-const corsOptions ={
-  origin:'http://localhost:3000', 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,            //access-control-allow-credentials:true
+  optionSuccessStatus: 200
 }
 var { swaggerUI, swaggerDocs } = require('./config/swagger-config');
 
@@ -19,12 +19,12 @@ require('dotenv').config();
 
 var app = express();
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    //res.header('Access-Control-Allow-Methods', ' PUT, POST, GET, DELETE, OPTIONS');
-    next();
-  });
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  //res.header('Access-Control-Allow-Methods', ' PUT, POST, GET, DELETE, OPTIONS');
+  next();
+});
 app.use(cors(corsOptions));
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
