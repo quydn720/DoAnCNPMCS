@@ -13,36 +13,24 @@ import Orders from './components/Orders_page/Orders';
 import Customer from './components/Customer_page/Customer';
 import Header_auth from './components/Header_auth';
 import Element from './components/Element__page/Element'
-import axios from 'axios';
-import { Component } from 'react';
+
 function App(props) {
     const [success,setSuccess]=useState(false);
-    const [account,setAccount]= useState([]);
 
     useEffect(()=>{
       async function Data(){
-      const requestUrl = `http://localhost:3001/api/nguoi-dung/thong-tin`;
-      var myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer" + localStorage.getItem('access_token'));
-
-      var requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow'
-      };
-
-      fetch(requestUrl, requestOptions)
-        .then(response =>{ 
-            return response.json()
-        })
-        .then(result => {
-          console.log(result)
-          setAccount({
-            account: result
+        if(localStorage.getItem('access_token') != null)
+        {
+          setSuccess({
+            success: true
           })
+<<<<<<< HEAD
           
         })
         .catch(error => console.log('error', error));
+=======
+        }
+>>>>>>> 0ea53c607753b9ddd6a6f883f8ca06e157f6b169
       }
       Data();
     },[])
@@ -51,7 +39,7 @@ function App(props) {
     return ( 
         <Router>
       <div>
-       <Header></Header>
+        { success ? <Header_auth/> : <Header></Header>}
         <Switch>
 
           <Route key="homepage" exact path="/" component={Home_pageJS}/>
