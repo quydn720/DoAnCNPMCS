@@ -32,11 +32,7 @@ export default function Header() {
                             </a>
                         </li>
 
-                        <li>
-                            <a href="#" class="nav-link text-secondary">
-                                Dashboard
-                            </a>
-                        </li>
+                        
 
                         <li>
                             <a href="/Orders_page" class="nav-link text-secondary">

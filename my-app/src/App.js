@@ -40,33 +40,13 @@ function App(props) {
           setAccount({
             account: result
           })
+          
         })
         .catch(error => console.log('error', error));
       }
       Data();
     },[])
-    //const Login = e =>{
-    // e.preventDefault();
-    //     fetch('http://localhost:3001/api/auth/login',{
-    //         method: "POST",
-    //         headers: {
-    //             "Accept" : "application/json",
-    //             "Content-Type" : "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //             "ten_tai_khoan": document.getElementById('ten_tai_khoan').value,
-    //             "mat_khau" : document.getElementById('mat_khau').value
-    //         })
-    //     }).then((result ) =>{
-    //         result.json().then((resp)=>{
-    //             console.log(resp.success);
-    //             setSuccess({
-    //                 success: resp.success
-    //             })
-    //         })
-    //     })
-
-    // };
+    
 
     return ( 
         <Router>

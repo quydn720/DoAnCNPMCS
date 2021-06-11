@@ -1,90 +1,58 @@
 import React from 'react';
-import '../Home_pageCSS/Popular_Laptop.css';
-import image1 from '../assets/images/xiaomi-redmi-9t-6gb-(6).jpg';
-import image2 from '../assets/images/vivo-y20s-(4).jpg';
-import image3 from '../assets/images/xiaomi.jpg';
-import image4 from '../assets/images/iphone-11-128gb-(14).jpg';
-const Popular_phone = () => {
+import queryString from 'query-string'
+import '../Home_pageCSS/Popular_phone.css';
+import Slider from 'react-slick'
+import image1 from '../assets/images/laptop_zenbook.jpg';
+import useFetch from './fetch'
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+const Products = () => {
+    const setting1 = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1
+      };
+      const param={
+        ma_loai_san_pham:'Phone'
+      }
+      const queryStrings=queryString.stringify(param);
+      console.log(queryStrings);
+      const { data: productList}=useFetch(       
+        `http://localhost:3001/api/san-pham?${queryStrings}`
+      )
     return (
-        <section className="container-title">
-            <h6 className="popular-product">Popular Phone</h6>
-            <div className="product-list">
-                <div className="card">
-                    <div Classname="title">
-                        <h5>
-                            Products
-                        </h5>
-                    </div>
-                    <div Classname="img">
-                        <img src={image1}></img>
-                    </div>
-                    <div className="text">
-                        $500.00
-                    </div>
-
-                    <button className="btbuy">
-                        Buy Now
-                    </button>
-
-                </div>
-                <div className="card">
-                    <div Classname="title">
-                        <h5>
-                            Products
-                        </h5>
-                    </div>
-                    <div Classname="img">
-                        <img src={image2}></img>
-                    </div>
-                    <div className="text">
-                        $200.00
-                    </div>
-
-                    <button className="btbuy">
-                        Buy Now
-                    </button>
-
-                </div>
-                <div className="card">
-                    <div Classname="title">
-                        <h5>
-                            Products
-                        </h5>
-                    </div>
-                    <div Classname="img">
-                        <img src={image3}></img>
-                    </div>
-                    <div className="text">
-                        $1000.00
-                    </div>
-
-                    <button className="btbuy">
-                        Buy Now
-                    </button>
-
-                </div>
-                <div className="card">
-                    <div Classname="title">
-                        <h5>
-                            Products
-                        </h5>
-                    </div>
-                    <div Classname="img">
-                        <img src={image4}></img>
-                    </div>
-                    <div className="text">
-                        $50.00
-                    </div>
-
-                    <button className="btbuy">
-                        Buy Now
-                    </button>
-
-                </div>
-                
+        <div className="popular">
+            <h6 className="popular__product">Popular Phone</h6>
+            <div className="container">
+                <Slider {...setting1} >
+                    {productList && productList.map(product=>(
+                    <Link to={`/Element_page/${product.ma_san_pham}`}>
+                        <div className="card" id={product.ma_san_pham}>
+                            <div classname="title">
+                                <h5>
+                                    {product.ten_san_pham}
+                                </h5>
+                            </div>
+                            <div classname="img">
+                                <img src={product.file&&product.file[0]}></img>
+                            </div>
+                            <div className="text">
+                                {
+                                    product.gia_tien
+                                }
+                            </div>
+                            <button className="btbuy">
+                                Buy Now
+                            </button>
+                        </div>
+                    </Link>
+                    ))}
+                </Slider>
             </div>
-        </section>
+        </div>
     );
 };
 
-export default Popular_phone;
+export default Products;

@@ -24,13 +24,13 @@
   padding: 5px 15px;
   overflow: hidden;
 }
-.slick-slide img {
+.container2 .slick-slide img {
   /* display: block; */
   width: 90%;
   /* object-fit: cover; */
   transition: all 0.3s linear;
 }
-.slick-slide img:hover {
+.container2 .slick-slide img:hover {
   -ms-transform: scale(1.2); /* IE 9 */
   -webkit-transform: scale(1.2); /* Safari 3-8 */
   transform: scale(1.2);

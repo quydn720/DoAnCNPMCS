@@ -20,24 +20,26 @@ import { Link } from 'react-router-dom';
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: 4,
         slidesToScroll: 1
       };
-    const [productList,setProductList]=useState()
-    useEffect(() => {
-        async function fetchData(){
-            const requestUrl='http://localhost:3001/api/san-pham'
-            const respone= await fetch(requestUrl);
-            const responseJson= await respone.json();
-            const {data} =responseJson;
-            setProductList(data);
-            // console.log(data)
-        }
-        fetchData();
-    }, [])
-    // const { data :productList, pending, error}=useFetch(
-    //     "http://localhost:3001/api/san-pham"
-    // )
+    // const [productList,setProductList]=useState()
+    // http://localhost:3001/api/san-pham
+    // useEffect(() => {
+    //     async function fetchData(){
+    //         const requestUrl='http://localhost:3001/api/san-pham'
+    //         const respone= await fetch(requestUrl);
+    //         const responseJson= await respone.json();
+    //         const {data} =responseJson;
+    //         // console.log(data)
+    //         setProductList(data);
+    //     }
+    //     fetchData();
+    // }, [])
+    
+    const { data : productList}=useFetch(
+        "http://localhost:3001/api/san-pham"
+    )
     return (
         <div class="container2">
              <li class="font">Items</li>
