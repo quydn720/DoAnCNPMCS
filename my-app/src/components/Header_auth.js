@@ -1,18 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Home_pageCSS/Header_auth.css';
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom'; 
 import Login_page from '../Login_page/Login_page';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+
 const Header_auth = () => {
-    let history=useHistory();
-    const orders='/Orders_page';
-    function handleClick(a) {
-        history.push(a);
-      }
+    //let history=useHistory();
+    // const orders='/Orders_page';
+    // function handleClick(a) {
+    //     history.push(a);
+    //   }
+
+    // const [success,setSuccess]=useState(false);
+    const [account,setAccount]= useState([]);
+  
+    useEffect(()=>{
+        async function Data(){
+          axios.get('http://localhost:3001/api/nguoi-dung/thong-tin', { withCredentials: true }).then((res) => {
+          console.log(res.data.success)
+          setAccount(res.data.data);
+  
+        })
+        }
+        Data();
+      },[])
+    function Logout(){
+        localStorage.removeItem('access_token');
+        alert("Log out Success!!!!")
+        
+    }
     return (
         <div className="header_auth">
-            {/* <header class="px-3 bg-dark text-white">
+            <header class="px-3 bg-dark text-white">
             <div class="container_auth">
+                { account && (
                 <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
                         <svg class="bi me-2" width="40" height="32">
@@ -45,25 +67,27 @@ const Header_auth = () => {
                         </li>
 
                         <li>
-                            <a href="#" class="nav-link text-secondary">
+                            <a href="/" class="nav-link text-secondary">
                                 Products
                             </a>
                         </li>
 
                         <li>
                             <a href="/Customer_page" class="nav-link text-secondary">
-                                Customers
+                                {account.ten_nguoi_dung}
                             </a>
                         </li>
                     </ul>
+                    <button type="button" class="btn btn-outline-light me-2" onClick={Logout}>Log out</button>
                     <form class="col-12 col-lg auto mb-3 mb-lg-0 me-lg-3">
                         <input type="search" class="form-auth-control" placeholder="Search..."></input>
                     </form>
+
                 </div>
+                )}
             </div>
-        </header>  */}
+        </header> 
                 
-        Hello
         </div>  
     );
 };

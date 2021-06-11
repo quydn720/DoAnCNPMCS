@@ -30,56 +30,65 @@ class Login_page extends Component{
     
    Login = e =>{
        e.preventDefault();
-    //   let request = {
-    //       ten_tai_khoan: document.getElementById('ten_tai_khoan').value,
-    //       mat_khau: document.getElementById('mat_khau').value
-    //   }
-    //   axios.post("http://localhost:3001/api/auth/login", request)
-    //   .then(resp => {
-    //     console.log(resp.data);
-    //     this.setState({
-    //         success: true
-    //     });
-
-    //     console.log(this.state);
+      let request = {
+          ten_tai_khoan: document.getElementById('ten_tai_khoan').value,
+          mat_khau: document.getElementById('mat_khau').value
+      }
+      axios.post("http://localhost:3001/api/auth/login", request,{withCredentials:true})
+      .then(resp => {
+        console.log(resp.data);
+        if(resp.data.success)
+        {
+            alert("SUCCESS!!!")
+            console.log(resp.data.access_token)
+            localStorage.setItem("access_token", resp.data.access_token);
+            this.setState({
+                success: resp.data.success,
+                isLogin: true
+            });
+        }
+        else {
+            alert("Username or password wrong!!!")
+        }
+        //console.log(this.state);
         
-    //   })
-    //   .catch(err=>{
-    //       console.log(err);
-    //   })
+      })
+      .catch(err=>{
+          console.log(err);
+      })
 
-        fetch('http://localhost:3001/api/auth/login',{
-            method: "POST",
-            headers: {
-                "Accept" : "application/json",
-                "Content-Type" : "application/json",
-            },
-            body: JSON.stringify({
-                "ten_tai_khoan": document.getElementById('ten_tai_khoan').value,
-                "mat_khau" : document.getElementById('mat_khau').value
-            })
-        }).then((result ) =>{
-            result.json().then((resp)=>{
-                if(resp.success)
-                {
-                    alert("SUCCESS!!!")
-                    localStorage.setItem("access_token", resp.access_token);
-                    console.log(resp.access_token);
-                    this.setState({
-                        success: resp.success,
-                        isLogin: true
-                    })
-                }
-                else{
-                    alert("Username or password wrong!!!")
-                }
-            })
-        })
+        // fetch('http://localhost:3001/api/auth/login',{
+        //     method: "POST",
+        //     headers: {
+        //         "Accept" : "application/json",
+        //         "Content-Type" : "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //         "ten_tai_khoan": document.getElementById('ten_tai_khoan').value,
+        //         "mat_khau" : document.getElementById('mat_khau').value
+        //     })
+        // }).then((result ) =>{
+        //     result.json().then((resp)=>{
+        //         if(resp.success)
+        //         {
+        //             alert("SUCCESS!!!")
+        //             localStorage.setItem("access_token", resp.access_token);
+        //             console.log(resp.access_token);
+        //             this.setState({
+        //                 success: resp.success,
+        //                 isLogin: true
+        //             })
+        //         }
+        //         else{
+        //             alert("Username or password wrong!!!")
+        //         }
+        //     })
+        // })
 
     };
     render(){
         return (
-
+        
        <div> {  this.state.isLogin ? <Home_page key={this.state.isLogin}/>
             :
         <section className="page-container">

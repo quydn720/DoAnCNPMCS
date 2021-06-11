@@ -8,7 +8,6 @@ const Footer = () => {
             <footer className="main-footer">
                 <div className="footer-left">
                     <img className="image__footer" src={image1} alt=""/>
-                    <p>Wellcome to florentino Countinho!!!!</p>
                     <div className="socials">
                         <a href="#"><i className="fa fa-facebook"></i></a>
                         <a href="#"><i className="fa fa-twitter"></i></a>
