@@ -136,6 +136,69 @@ router.post('/', validator(signUpSchema), async function (req, res) {
 
 /**
  * @swagger
+ * /api/nguoi-dung:
+ *  put:
+ *      summary: Cập nhật thông tin tài khoản
+ *      tags: [NguoiDung]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/x-www-form-urlencoded:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                         ten_nguoi_dung: 
+ *                             type: string
+ *                         ten_tai_khoan: 
+ *                             type: string
+ *                         dia_chi:
+ *                             type: string
+ *                         so_dien_thoai:
+ *                             type: string
+ *      responses:
+ *          200:
+ *              description: Trạng thái trả về
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              success:
+ *                                  type: boolean
+ *                                  description: Trạng thái trả về
+ *                              data:
+ *                                  type: object
+ *                                  properties:
+ *                                      ten_nguoi_dung: 
+ *                                          type: string
+ *                                      ten_tai_khoan: 
+ *                                          type: string
+ *                                      email: 
+ *                                          type: string
+ *                                      dia_chi:
+ *                                          type: string
+ *                                      so_dien_thoai:
+ *                                          type: string
+ */
+router.put('/', ensureAuthenticated, async (req, res) => {
+    try {
+        var updateNguoiDung = {
+            ten_nguoi_dung: req.body.ten_nguoi_dung,
+            ten_tai_khoan: req.body.ten_tai_khoan,
+            dia_chi: req.body.dia_chi,
+            so_dien_thoai: req.body.so_dien_thoai
+        };
+
+        await db.collection('NguoiDung').doc(req.user.uid).update(updateNguoiDung);
+        return res.json({ success: true, data: updateNguoiDung });
+    }
+    catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
+});
+
+/**
+ * @swagger
  * /api/nguoi-dung/doi-mat-khau:
  *  put:
  *      summary: Đổi mật khẩu

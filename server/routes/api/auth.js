@@ -59,11 +59,11 @@ router.post('/login', validator(loginSchema), function (req, res) {
             firebaseApp.auth().signInWithEmailAndPassword(email, password)
                 .then(({ user }) => {
                     user.getIdToken().then((idToken) => {
-                        auth.createSessionCookie(idToken, { expiresIn })                      
+                        auth.createSessionCookie(idToken, { expiresIn })
                             .then((sessionCookie) => {
                                 const options = { maxAge: expiresIn, httpOnly: true };
                                 res.cookie("session", sessionCookie, options);
-                                res.json({ success: true,  access_token: sessionCookie, jwt: idToken  });
+                                res.json({ success: true, access_token: sessionCookie });
                             }, (error) => {
                                 res.status(401).json({ success: false, message: error?.message });
                             })

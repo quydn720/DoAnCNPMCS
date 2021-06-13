@@ -371,7 +371,7 @@ router.post('/', validator(sanPhamSchema), async (req, res) => {
  *                                          so_luong_ton_kho:
  *                                              type: number
  *                                          loai_san_pham:
- *                                              type: number
+ *                                              type: string
  *                                          mo_ta: 
  *                                              type: string
  *                                          cau_hinh: 
