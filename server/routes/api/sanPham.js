@@ -284,14 +284,25 @@ router.post('/', validator(sanPhamSchema), async (req, res) => {
         }
         var result = await collectionSanPham.add(insertSanPham);
         insertSanPham.ma_san_pham = result.id;
-        if (req.files?.file)
-            for (const file of req.files?.file) {
+        if (req.files?.file) {
+            if (Array.isArray(req.files?.file)) {
+                for (const file of req.files?.file) {
+                    var snapshot = await firebaseApp.storage()
+                        .ref(`SanPham/${result.id}/${file.name}`)
+                        .put(file.data, { contentType: file.mimetype });
+                    var fileURL = await snapshot.ref.getDownloadURL();
+                    fileURL_arr.push(fileURL);
+                }
+            }
+            else {
+                var file = req.files?.file;
                 var snapshot = await firebaseApp.storage()
                     .ref(`SanPham/${result.id}/${file.name}`)
                     .put(file.data, { contentType: file.mimetype });
                 var fileURL = await snapshot.ref.getDownloadURL();
                 fileURL_arr.push(fileURL);
             }
+        }
         console.log(await fileURL_arr);
         insertSanPham.file = fileURL_arr;
         var result = await result.update({ file: await fileURL_arr });
