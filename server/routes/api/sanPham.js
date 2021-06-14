@@ -495,7 +495,7 @@ router.delete('/', async (req, res) => {
     try {
         var collectionSanPham = db.collection('SanPham');
         await collectionSanPham.doc(req.body.ma_san_pham).delete();
-        await firebaseApp.storage().ref(`SanPham/${req.body.ma_san_pham}`).delete();
+        firebaseApp.storage().ref(`SanPham/${req.body.ma_san_pham}`).delete().then(() => { }, () => { });
         return res.json({ success: true, data: { ma_san_pham: req.body.ma_san_pham } });
     }
     catch (err) {
