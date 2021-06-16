@@ -284,14 +284,25 @@ router.post('/', validator(sanPhamSchema), async (req, res) => {
         }
         var result = await collectionSanPham.add(insertSanPham);
         insertSanPham.ma_san_pham = result.id;
-        if (req.files?.file)
-            for (const file of req.files?.file) {
+        if (req.files?.file) {
+            if (Array.isArray(req.files?.file)) {
+                for (const file of req.files?.file) {
+                    var snapshot = await firebaseApp.storage()
+                        .ref(`SanPham/${result.id}/${file.name}`)
+                        .put(file.data, { contentType: file.mimetype });
+                    var fileURL = await snapshot.ref.getDownloadURL();
+                    fileURL_arr.push(fileURL);
+                }
+            }
+            else {
+                var file = req.files?.file;
                 var snapshot = await firebaseApp.storage()
                     .ref(`SanPham/${result.id}/${file.name}`)
                     .put(file.data, { contentType: file.mimetype });
                 var fileURL = await snapshot.ref.getDownloadURL();
                 fileURL_arr.push(fileURL);
             }
+        }
         console.log(await fileURL_arr);
         insertSanPham.file = fileURL_arr;
         var result = await result.update({ file: await fileURL_arr });
@@ -371,7 +382,7 @@ router.post('/', validator(sanPhamSchema), async (req, res) => {
  *                                          so_luong_ton_kho:
  *                                              type: number
  *                                          loai_san_pham:
- *                                              type: number
+ *                                              type: string
  *                                          mo_ta: 
  *                                              type: string
  *                                          cau_hinh: 
@@ -388,11 +399,12 @@ router.post('/', validator(sanPhamSchema), async (req, res) => {
 router.put('/', validator(sanPhamUpdateSchema), async (req, res) => {
     try {
         var collectionSanPham = db.collection('SanPham');
+        var loai_san_pham = (await db.collection('LoaiSanPham').
+            doc(req.body.ma_loai_san_pham || '-').get())?.data()?.loai_san_pham;
         var updateSanPham = {
             ten_san_pham: req.body.ten_san_pham,
             ma_loai_san_pham: req.body.ma_loai_san_pham,
-            loai_san_pham: (await db.collection('LoaiSanPham').
-                doc(req.body.ma_loai_san_pham).get()).data().loai_san_pham,
+            loai_san_pham: loai_san_pham,
             gia_tien: req.body.gia_tien,
             so_luong: req.body.so_luong,
             mo_ta: req.body.mo_ta,
@@ -405,13 +417,25 @@ router.put('/', validator(sanPhamUpdateSchema), async (req, res) => {
         var result = await collectionSanPham.doc(req.body.ma_san_pham).update(updateSanPham);
         updateSanPham.ma_san_pham = result.id;
         var fileURL_arr = [];
-        console.log(req.body.delete_file.split(','))
-        for (var deleteURL of req.body.delete_file.split(',')) {
-            firebaseApp.storage().refFromURL(deleteURL).delete();
-            await collectionSanPham.doc(req.body.ma_san_pham).update({ file: FieldValue.arrayRemove(deleteURL) });
-        }
-        if (req.files?.file)
-            for (const file of req.files?.file) {
+        if (req.body.delete_file != null)
+            for (var deleteURL of req.body.delete_file.split(',')) {
+                firebaseApp.storage().refFromURL(deleteURL).delete();
+                await collectionSanPham.doc(req.body.ma_san_pham).update({ file: FieldValue.arrayRemove(deleteURL) });
+            }
+        if (req.files?.file) {
+            if (Array.isArray(req.files?.file)) {
+                for (const file of req.files?.file) {
+                    var snapshot = await firebaseApp.storage()
+                        .ref(`SanPham/${result.id}/${file.name}`)
+                        .put(file.data, { contentType: file.mimetype });
+                    var fileURL = await snapshot.ref.getDownloadURL();
+                    await collectionSanPham.doc(req.body.ma_san_pham).update({ file: FieldValue.arrayUnion(fileURL) });
+                    console.log(fileURL);
+                    fileURL_arr.push(fileURL);
+                }
+            }
+            else {
+                var file = req.files?.file;
                 var snapshot = await firebaseApp.storage()
                     .ref(`SanPham/${result.id}/${file.name}`)
                     .put(file.data, { contentType: file.mimetype });
@@ -420,7 +444,10 @@ router.put('/', validator(sanPhamUpdateSchema), async (req, res) => {
                 console.log(fileURL);
                 fileURL_arr.push(fileURL);
             }
-        updateSanPham.delete_file = req.body.delete_file.split(',');
+
+        }
+
+        updateSanPham.delete_file = req.body.delete_file?.split(',');
         updateSanPham.new_file = fileURL_arr;
         return res.json({ success: true, data: updateSanPham });
     }
@@ -468,7 +495,7 @@ router.delete('/', async (req, res) => {
     try {
         var collectionSanPham = db.collection('SanPham');
         await collectionSanPham.doc(req.body.ma_san_pham).delete();
-        await firebaseApp.storage().ref(`SanPham/${req.body.ma_san_pham}`).delete();
+        firebaseApp.storage().ref(`SanPham/${req.body.ma_san_pham}`).delete().then(() => { }, () => { });
         return res.json({ success: true, data: { ma_san_pham: req.body.ma_san_pham } });
     }
     catch (err) {
