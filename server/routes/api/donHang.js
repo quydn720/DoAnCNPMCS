@@ -195,7 +195,7 @@ router.post('/xac-nhan-don-hang', async (req, res) => {
  *                                      type: boolean
  *                                      description: Trạng thái trả về
  */
-router.post('/xac-nhan-don-hang', async (req, res) => {
+router.post('/xac-nhan-hoan-thanh', async (req, res) => {
     try {
         var donHang = await db.collection('DonHang').doc(req.body.ma_don_hang).get();
         if (donHang.exists) {
