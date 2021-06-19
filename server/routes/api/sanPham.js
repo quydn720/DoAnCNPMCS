@@ -415,7 +415,7 @@ router.put('/', validator(sanPhamUpdateSchema), async (req, res) => {
             thoi_gian_su_dung: req.body.thoi_gian_su_dung
         }
         var result = await collectionSanPham.doc(req.body.ma_san_pham).update(updateSanPham);
-        updateSanPham.ma_san_pham = result.id;
+        updateSanPham.ma_san_pham = req.body.ma_san_pham;
         var fileURL_arr = [];
         if (req.body.delete_file != null)
             for (var deleteURL of req.body.delete_file.split(',')) {
@@ -426,7 +426,7 @@ router.put('/', validator(sanPhamUpdateSchema), async (req, res) => {
             if (Array.isArray(req.files?.file)) {
                 for (const file of req.files?.file) {
                     var snapshot = await firebaseApp.storage()
-                        .ref(`SanPham/${result.id}/${file.name}`)
+                        .ref(`SanPham/${updateSanPham.ma_san_pham}/${file.name}`)
                         .put(file.data, { contentType: file.mimetype });
                     var fileURL = await snapshot.ref.getDownloadURL();
                     await collectionSanPham.doc(req.body.ma_san_pham).update({ file: FieldValue.arrayUnion(fileURL) });
@@ -437,7 +437,7 @@ router.put('/', validator(sanPhamUpdateSchema), async (req, res) => {
             else {
                 var file = req.files?.file;
                 var snapshot = await firebaseApp.storage()
-                    .ref(`SanPham/${result.id}/${file.name}`)
+                    .ref(`SanPham/${updateSanPham.ma_san_pham}/${file.name}`)
                     .put(file.data, { contentType: file.mimetype });
                 var fileURL = await snapshot.ref.getDownloadURL();
                 await collectionSanPham.doc(req.body.ma_san_pham).update({ file: FieldValue.arrayUnion(fileURL) });
