@@ -53,8 +53,8 @@ router.get('/', async (req, res) => {
         for (var gioHangItem of gioHang.docs) {
             let item = gioHangItem.data();
             let sanPham = await collectionSanPham.doc(item.ma_san_pham).get();
-            item.ten_san_pham = sanPham.data().ten_san_pham;
-            item.gia_tien = sanPham.data().gia_tien;
+            item.ten_san_pham = sanPham.data()?.ten_san_pham;
+            item.gia_tien = sanPham.data()?.gia_tien;
             data.push(item);
         }
         return res.json({ success: true, data: data });
