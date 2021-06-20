@@ -18,7 +18,6 @@ const Products = () => {
         ma_loai_san_pham:'Laptop'
       }
       const queryStrings=queryString.stringify(param);
-      console.log(queryStrings);
       const { data: productList}=useFetch(       
         `http://localhost:3001/api/san-pham?${queryStrings}`
       )

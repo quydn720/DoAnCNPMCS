@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState,useEffect } from "react";
+import axios from 'axios'
 
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom'; 
 import SignUp_page from './SignUp_page/SignUp_page';
@@ -13,7 +14,7 @@ import Orders from './components/Orders_page/Orders';
 import Customer from './components/Customer_page/Customer';
 import Header_auth from './components/Header_auth';
 import Element from './components/Element__page/Element'
-
+axios.defaults.withCredentials = true;
 function App(props) {
     const [success,setSuccess]=useState(false);
 

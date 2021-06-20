@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./Order__item.css";
-Order__item.propTypes = {
-  order: PropTypes.object,
-  onChosen: PropTypes.func,
-  onRemove: PropTypes.func,
-};
-Order__item.propTypes = {
-  order: null,
-  onChosen: null,
-  onRemove: null,
-};
+import axios from "axios";
+// Order__item.propTypes = {
+//   order: PropTypes.object,
+//   onChosen: PropTypes.func,
+//   onRemove: PropTypes.func,
+// };
+// Order__item.propTypes = {
+//   order: null,
+//   onChosen: null,
+//   onRemove: null,
+// };
 
 function Order__item(props) {
   // const [check, setCheck] = useState(false);
@@ -20,6 +21,12 @@ function Order__item(props) {
   //   const a = order.id;
   //   onChosen(a, e.target.checked, order);
   // }
+  // useEffect(() => {
+  //   effect
+  //   return () => {
+  //     cleanup
+  //   }
+  // }, [input])
   function check(e) {
     const a = order1.id;
     console.log(a);
@@ -32,13 +39,37 @@ function Order__item(props) {
 
   const handleCountMinus = (e) => {
     // if(order1.count)
-    setOrder1({ ...order1, count: order1.count - 1 });
+    setOrder1({ ...order1, so_luong: order1.so_luong - 1 });
+    axios.put("http://localhost:3001/api/gio-hang", {
+      data: {
+        ma_san_pham: order1.ma_san_pham,
+        so_luong: order1.so_luong - 1,
+      },
+    });
   };
-  function handleCountPlus(e) {
-    setOrder1({ ...order1, count: order1.count + 1 });
+  async function handleCountPlus(e) {
+    setOrder1({ ...order1, so_luong: order1.so_luong + 1 });
+    axios
+      .put(
+        "http://localhost:3001/api/gio-hang",
+        {
+          ma_san_pham: order1.ma_san_pham,
+          so_luong: order1.so_luong + 1,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   const handleDelete = () => {
-    onDelete(order1.id);
+    // console.log(order1.ma_san_pham)
+    onDelete(order1.ma_san_pham);
   };
   return (
     <li className="list__item-product">
@@ -52,9 +83,9 @@ function Order__item(props) {
             type="checkbox"
             onChange={check}
           ></input>
-          <div className="product__image">
+          {/* <div className="product__image">
             <img className="img" src={order1.file && order1.file[0]}></img>
-          </div>
+          </div> */}
           <div>{order1.ten_san_pham}</div>
         </div>
         <span className="product__price">{order1.gia_tien}$</span>
@@ -62,17 +93,17 @@ function Order__item(props) {
           <button
             className="add__button"
             onClick={handleCountMinus}
-            disabled={order1.count <= 0}
+            disabled={order1.so_luong <= 1}
           >
             -
           </button>
-          <span className="product__num">{order1.count}</span>
+          <span className="product__num">{order1.so_luong}</span>
           <button className="sub__button" onClick={handleCountPlus}>
             +
           </button>
         </div>
         <span className="product__total">
-          {order1.gia_tien * order1.count}$
+          {order1.gia_tien * order1.so_luong}$
         </span>
       </div>
     </li>

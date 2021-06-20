@@ -36,11 +36,11 @@ class Login_page extends Component{
       }
       axios.post("http://localhost:3001/api/auth/login", request,{withCredentials:true})
       .then(resp => {
-        console.log(resp.data);
+        console.log(resp);
         if(resp.data.success)
         {
+            console.log(resp);
             alert("SUCCESS!!!")
-            console.log(resp.data.access_token)
             localStorage.setItem("access_token", resp.data.access_token);
             this.setState({
                 success: resp.data.success,

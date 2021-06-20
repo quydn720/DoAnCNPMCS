@@ -12,6 +12,7 @@ import {
 import "./Orders.css";
 import Order__item from "./Order__item/Order__item";
 import Buy__item from "./Buy__item/Buy__item";
+import axios from "axios";
 Orders.propTypes = {
   orders: PropTypes.array,
 };
@@ -21,33 +22,38 @@ Orders.defaultProps = {
 
 function Orders(props) {
   const [orders, setOrders] = useState([]);
+  const [token, setToken] = useState(null);
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("orders")))
-      setOrders(JSON.parse(localStorage.getItem("orders")));
-    else {
-      setOrders([]);
+    async function Data() {
+      axios.get("http://localhost:3001/api/gio-hang").then((res) => {
+        setOrders(res.data.data);
+        console.log(res.data.data);
+      });
     }
-    // setImage(product.file && product.file[0]);
+    Data();
   }, []);
-  useEffect(() => {
-    localStorage.setItem("orders", JSON.stringify(orders));
-  });
   const [cartItem, setCartItem] = useState([]);
 
   function onAdd(id, product) {
     setCartItem([...cartItem, { ...product }]);
   }
   function onRemove(id, product) {
-    const cartItem1 = [...cartItem];
-    const exist = cartItem.find((x) => x.id === id);
-    if (exist) {
-      setCartItem(cartItem.filter((x) => x.id !== id));
-    }
+    console.log(id);
+    // const cartItem1 = [...cartItem];
+    // const exist = cartItem.find((x) => x.id === id);
+    // if (exist) {
+    //   setCartItem(cartItem.filter((x) => x.id !== id));
+    // }
   }
   function onDelete(id) {
-    // console.log(id);
-    setOrders(orders.filter((order) => order.id !== id));
-    localStorage.setItem("orders", JSON.stringify(orders));
+    setOrders(orders.filter((order) => order.ma_san_pham !== id));
+    // console.log(
+    //   typeof JSON.parse(localStorage.getItem("access_token").toString())
+    // );
+    console.log(1);
+    axios.delete("http://localhost:3001/api/gio-hang", {
+      data: { ma_san_pham: id },
+    });
   }
   return (
     <div className="orders">
@@ -73,15 +79,16 @@ function Orders(props) {
             </div>
             <div className="">
               <ul className="list__item">
-                {orders.map((order) => (
-                  <Order__item
-                    key={order.id}
-                    order={order}
-                    onAdd={onAdd}
-                    onRemove={onRemove}
-                    onDelete={onDelete}
-                  ></Order__item>
-                ))}
+                {orders &&
+                  orders.map((order) => (
+                    <Order__item
+                      key={order.ma_san_pham}
+                      order={order}
+                      onAdd={onAdd}
+                      onRemove={onRemove}
+                      onDelete={onDelete}
+                    ></Order__item>
+                  ))}
               </ul>
             </div>
           </div>

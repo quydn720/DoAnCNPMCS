@@ -18,9 +18,8 @@ const Header_auth = () => {
     useEffect(()=>{
         async function Data(){
           axios.get('http://localhost:3001/api/nguoi-dung/thong-tin', { withCredentials: true }).then((res) => {
-          console.log(res.data.success)
+          console.log(res.data.data)
           setAccount(res.data.data);
-  
         })
         }
         Data();
@@ -80,7 +79,7 @@ const Header_auth = () => {
                     </ul>
                     <button type="button" class="btn btn-outline-light me-2" onClick={Logout}>Log out</button>
                     <form class="col-12 col-lg auto mb-3 mb-lg-0 me-lg-3">
-                        <input type="search" class="form-auth-control" placeholder="Search..."></input>
+                        <input type="search" class="form-auth-control" placeholder="Search..." ></input>
                     </form>
 
                 </div>

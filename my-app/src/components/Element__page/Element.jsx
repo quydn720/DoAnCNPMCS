@@ -8,6 +8,8 @@ import { blue, red } from "@material-ui/core/colors";
 import Main from "../Main";
 import useFetch from "../fetch";
 import { useHistory, useParams } from "react-router-dom";
+import { data } from "jquery";
+import axios from "axios";
 Element.propTypes = {
   post: PropTypes.object,
 };
@@ -22,8 +24,21 @@ function Element(props) {
   const [image, setImage] = useState(
     "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2xvdGhpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
   );
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState({
+    xuat_xu: "",
+    file: [],
+    ten_san_pham: "",
+    gia_tien: 0,
+    mo_ta: "",
+    thoi_gian_su_dung: 0,
+    tinh_trang_san_pham: "",
+    so_luong: 1,
+    cau_hinh: "",
+    ten_thuong_hieu: "",
+    ma_san_pham: "",
+  });
   const [orders, setOrder] = useState([]);
+  // lấy thông tin sản phẩm
   useEffect(() => {
     async function fetchData() {
       const requestUrl = `http://localhost:3001/api/san-pham/${id}`;
@@ -31,35 +46,42 @@ function Element(props) {
       const responseJson = await respone.json();
       const { data } = responseJson;
       setProduct(data);
-      // console.log(data)
     }
     fetchData();
   }, [id]);
-  useEffect(() => {
-    if (JSON.parse(localStorage.getItem("orders")))
-      setOrder(JSON.parse(localStorage.getItem("orders")));
-    else {
-      setOrder([]);
-    }
-    // setImage(product.file && product.file[0]);
-  }, []);
 
+  // lấy danh sách sản phẩm trong giỏ hàng
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    async function fetchData() {
+      axios
+        .get("http://localhost:3001/api/gio-hang", { withCredentials: true })
+        .then((res) => {
+          const { data } = res.data;
+          setOrder(data);
+        });
+    }
+    fetchData();
+  }, [id]);
+
+  const param = {
+    ma_san_pham: id,
+    so_luong: 1,
+  };
   // JSON.stringify(orders)
   const handleAddProduct = (e) => {
-    const orders1 = [...orders];
-    orders1.push({
-      id: id,
-      ten_san_pham: product.ten_san_pham,
-      gia_tien: product.gia_tien,
-      count: 1,
-      file: product.file,
-    });
-    setOrder(orders1);
-    localStorage.setItem("orders", JSON.stringify(orders1));
-
-    if (JSON.parse(localStorage.getItem("orders"))) {
-      routeChange();
-    }
+    axios
+      .post("http://localhost:3001/api/gio-hang", param, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    routeChange();
+    console.log(orders);
   };
   // console.log(orders);
   function infoHandle() {
@@ -74,6 +96,7 @@ function Element(props) {
     }
     console.log(info);
   }
+
   function desHandle() {
     var info = document.querySelector(".wrap__bottom-info");
     var des = document.querySelector(".wrap__bottom-description");
@@ -86,6 +109,7 @@ function Element(props) {
     }
     // console.log(des);
   }
+
   return (
     <div className="element">
       {product && (
@@ -107,6 +131,7 @@ function Element(props) {
                     {product.file != null &&
                       product.file.map((file, index) => (
                         <img
+                          key={index}
                           onClick={() => setImage(product.file[index])}
                           className="image__small-element"
                           src={product.file && product.file[index]}
