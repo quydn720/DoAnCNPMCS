@@ -69,19 +69,18 @@ function Element(props) {
     so_luong: 1,
   };
   // JSON.stringify(orders)
-  const handleAddProduct = (e) => {
-    axios
+  const handleAddProduct = async (e) => {
+    await axios
       .post("http://localhost:3001/api/gio-hang", param, {
         withCredentials: true,
       })
       .then((res) => {
         console.log(res);
+        routeChange();
       })
       .catch((err) => {
         console.log(err);
       });
-    routeChange();
-    console.log(orders);
   };
   // console.log(orders);
   function infoHandle() {
@@ -144,7 +143,7 @@ function Element(props) {
                   <h3>{product.ten_san_pham}</h3>
                   <div>Giá:{product.gia_tien}</div>
                   <div>Tình trạng:{product.tinh_trang_san_pham}</div>
-                  <div className="information">Thông tin:</div>
+                  {/* <div className="information">Thông tin:</div> */}
                   <div className="product__info-color">
                     <span>Màu:</span>
                     <button

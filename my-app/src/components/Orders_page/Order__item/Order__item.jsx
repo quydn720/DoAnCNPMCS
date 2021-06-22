@@ -28,7 +28,7 @@ function Order__item(props) {
   //   }
   // }, [input])
   function check(e) {
-    const a = order1.id;
+    const a = order1.ma_san_pham;
     console.log(a);
     if (e.target.checked) {
       onAdd(a, order1);
@@ -40,12 +40,23 @@ function Order__item(props) {
   const handleCountMinus = (e) => {
     // if(order1.count)
     setOrder1({ ...order1, so_luong: order1.so_luong - 1 });
-    axios.put("http://localhost:3001/api/gio-hang", {
-      data: {
-        ma_san_pham: order1.ma_san_pham,
-        so_luong: order1.so_luong - 1,
-      },
-    });
+    axios
+      .put(
+        "http://localhost:3001/api/gio-hang",
+        {
+          ma_san_pham: order1.ma_san_pham,
+          so_luong: order1.so_luong - 1,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   async function handleCountPlus(e) {
     setOrder1({ ...order1, so_luong: order1.so_luong + 1 });

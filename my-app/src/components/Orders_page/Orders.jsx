@@ -22,28 +22,32 @@ Orders.defaultProps = {
 
 function Orders(props) {
   const [orders, setOrders] = useState([]);
-  const [token, setToken] = useState(null);
+  const [cartItem, setCartItem] = useState([]);
+  const [user, setUser] = useState(null);
   useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
     async function Data() {
-      axios.get("http://localhost:3001/api/gio-hang").then((res) => {
-        setOrders(res.data.data);
-        console.log(res.data.data);
-      });
+      await axios
+        .get("http://localhost:3001/api/gio-hang")
+        .then((res) => {
+          setOrders(res.data.data);
+          console.log(res.data.data);
+        })
+        .catch((err) => console.log(err));
     }
     Data();
   }, []);
-  const [cartItem, setCartItem] = useState([]);
 
   function onAdd(id, product) {
     setCartItem([...cartItem, { ...product }]);
   }
   function onRemove(id, product) {
     console.log(id);
-    // const cartItem1 = [...cartItem];
-    // const exist = cartItem.find((x) => x.id === id);
-    // if (exist) {
-    //   setCartItem(cartItem.filter((x) => x.id !== id));
-    // }
+    const cartItem1 = [...cartItem];
+    const exist = cartItem.find((x) => x.ma_san_pham === id);
+    if (exist) {
+      setCartItem(cartItem.filter((x) => x.ma_san_pham !== id));
+    }
   }
   function onDelete(id) {
     setOrders(orders.filter((order) => order.ma_san_pham !== id));
@@ -55,6 +59,31 @@ function Orders(props) {
       data: { ma_san_pham: id },
     });
   }
+
+  //Lap don hang
+  const handlePayment = async () => {
+    if (user) {
+      await axios
+        .post(
+          "http://localhost:3001/api/gio-hang/thanh-toan",
+          {
+            ten_nguoi_nhan: user.ten_nguoi_dung,
+            so_dien_thoai: user.so_dien_thoai,
+            dia_chi: user.dia_chi,
+            email: user.email,
+          },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <div className="orders">
       <div className="container">
@@ -111,13 +140,15 @@ function Orders(props) {
               <div className="list__total-right">
                 <h2>
                   {cartItem.reduce((acc, currentValue) => {
-                    return acc + currentValue.gia_tien * currentValue.count;
+                    return acc + currentValue.gia_tien * currentValue.so_luong;
                   }, 0)}
                 </h2>
                 <span>Đã bao gồm thuế VAT</span>
               </div>
             </div>
-            <div className="paybutton">Tiến hành thanh toán</div>
+            <div className="paybutton" onClick={handlePayment}>
+              Tiến hành thanh toán
+            </div>
           </div>
         </div>
       </div>

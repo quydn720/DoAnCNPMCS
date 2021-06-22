@@ -20,6 +20,7 @@ const Header_auth = () => {
           axios.get('http://localhost:3001/api/nguoi-dung/thong-tin', { withCredentials: true }).then((res) => {
           console.log(res.data.data)
           setAccount(res.data.data);
+          localStorage.setItem('user',JSON.stringify(res.data.data))
         })
         }
         Data();
@@ -27,7 +28,7 @@ const Header_auth = () => {
     function Logout(){
         localStorage.removeItem('access_token');
         alert("Log out Success!!!!")
-        
+        localStorage.removeItem('user');
     }
     return (
         <div className="header_auth">

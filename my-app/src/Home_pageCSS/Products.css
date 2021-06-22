@@ -1,45 +1,42 @@
-.container-title .popular-product {
+.popular .popular__product {
   font-size: 35px;
   font-weight: bold;
   text-align: left;
-  margin-left: 2em;
+  margin-left: auto;
+  margin-right: auto;
   padding-top: 5px;
   max-width: 300px;
   color: black;
 }
-
-.container-title {
+.popular .container {
   background-color: whitesmoke;
 }
-
-.product-list {
-  padding: 3em;
-  max-width: auto;
-  max-height: auto;
-  grid-template-columns: repeat(4, auto);
-  grid-template-rows: repeat(4, 1fr);
-  display: grid;
-  grid-gap: 50px;
-  align-items: center;
-  margin-bottom: 2em;
-  background-color: whitesmoke;
+.container a {
+  text-decoration: none;
 }
-
-.product-list .card {
+.popular .container .card {
+  margin: 20px 0px;
   background-color: white;
   border-radius: 10px;
   padding: 1em;
   text-align: center;
   font-family: "Poppins";
   transition: 0.5s;
+  text-decoration: none;
   animation-timing-function: ease-in-out;
   animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-.product-list > .card:hover {
+.popular .container .card:hover {
   transform: translateY(-1em);
   box-shadow: 2px 2px 6px 2px;
   cursor: pointer;
+}
+
+.popular .container .slick-arrow {
+  background-color: red;
+  width: 30px;
+  height: 30px;
 }
 
 h5 {

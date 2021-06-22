@@ -17,10 +17,10 @@ function Buy__item(props) {
   return (
     <ul className="list__buy">
       {cartItem.map((item) => (
-        <li className="buy__item" key={item.id}>
+        <li className="buy__item" key={item.ma_san_pam}>
           <div className="buy__item-name">{item.ten_san_pham}</div>
-          <span>{item.count}</span>
-          <span>{item.count * item.gia_tien}$</span>
+          <span>{item.so_luong}</span>
+          <span>{item.so_luong * item.gia_tien}$</span>
         </li>
       ))}
     </ul>
