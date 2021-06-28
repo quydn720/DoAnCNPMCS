@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./Element.css";
-import Header from "../Header";
+import Header from "../Header/Header";
 import Footer from "../Footer";
 import Slider from "react-slick";
 import { blue, red } from "@material-ui/core/colors";

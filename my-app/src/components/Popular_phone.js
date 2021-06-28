@@ -10,9 +10,12 @@ const Products = () => {
     const setting1 = {
         dots: true,
         infinite: true,
-        speed: 500,
         slidesToShow: 4,
-        slidesToScroll: 1
+        autoplay: true,
+        speed: 500,
+        autoplaySpeed: 2000,
+        cssEase: "linear",
+        lazyLoad: true,
       };
       const param={
         ma_loai_san_pham:'Phone'
