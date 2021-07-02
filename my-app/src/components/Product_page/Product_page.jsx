@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Authorization_Header from '../../components/Authorization/Authorization_Header';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, Modal } from 'react-bootstrap';
 import { Route, Router, Switch, useHistory } from 'react-router-dom';
 //import Laptop__page from './Laptop__page/Laptop__page';
 //import Phone__page from './Phone__page/Phone__page';
@@ -22,6 +22,7 @@ import './Product_page.css'
 import Add__page from './Add__page/Add__page';
 import Delete__page from './Delete__page/Delete__page';
 import Update__page from './Update__page/Update__page';
+import { render } from '@testing-library/react';
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
@@ -33,14 +34,43 @@ const useStyles = makeStyles((theme) => ({
         color: '#fff',
     },
 }));
+function MyVerticallyCenteredModal(props) {
+    return (
+        <Modal
+            {...props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    Modal heading
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <h4>Centered Modal</h4>
+                <p>
+                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+                    dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+                    consectetur ac, vestibulum at eros.
+                </p>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={props.onHide}>Close</Button>
+            </Modal.Footer>
+        </Modal>
+    );
+}
 function Product__page(props) {
     const history = useHistory();
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [admin, setAdmin] = useState(false);
+    const [modalShow, setModalShow] = React.useState(false);
     const handleClose = () => {
         setOpen(false);
     };
+
     const handleToggle = () => {
         setOpen(!open);
         history.push("/Product_page/Add__page");
@@ -88,7 +118,7 @@ function Product__page(props) {
                 </Navbar>
                 {admin ?
                     <div className={classes.root}>
-                        <Button variant="contained" size="large" color="primary" onClick={handleToggle}>
+                        <Button variant="contained" size="large" color="primary" onClick={handleToggle} >
                             Thêm sản phẩm
                         </Button>
                         <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
@@ -105,6 +135,10 @@ function Product__page(props) {
             </div>
 
             <div>
+                <MyVerticallyCenteredModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                />
                 <Switch>
                     <Route
                         path="/Product_page/All"
@@ -130,3 +164,4 @@ function Product__page(props) {
 }
 
 export default Product__page;
+

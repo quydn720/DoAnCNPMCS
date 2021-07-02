@@ -44,15 +44,15 @@ function Add__page(props) {
             console.log("Lapyop")
         }
         else if (document.getElementById("MaLoaiSP").value === "Phone") {
-            setMa("D0n9AlgDHjvK34AZzXA6");
+            setMa("zgFsfEG1Dd5KP2S7ZD8");
             console.log("Phone")
         }
-        else if (document.getElementById("MaLoaiSP").value === "Ipad") {
-            setMa("xrYMeASY0O9lr6zlEZQr");
+        else if (document.getElementById("MaLoaiSP").value === "Tai nghe") {
+            setMa("R0RHNpwSnk0K3pTF9wtp");
             console.log("Ipad")
         }
         else {
-            setMa("q6BG4jU0ZZ71hGJwiEMC");
+            setMa("LUvHhrXge1xlJDtTmsBd");
             console.log("Others")
         }
     }
@@ -127,7 +127,7 @@ function Add__page(props) {
                             <Form.Control as="select" id="MaLoaiSP">
                                 <option id="laptop">Laptop</option>
                                 <option id="phone">Phone</option>
-                                <option id="ipad">Ipad</option>
+                                <option id="Earbuds">Tai nghe</option>
                                 <option id="others">Others</option>
                             </Form.Control>
                         </Form.Group>
