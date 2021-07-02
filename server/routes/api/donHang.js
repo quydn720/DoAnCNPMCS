@@ -11,6 +11,61 @@ var validator = require('../../config/validator-config');
  *  description: Đơn hàng
  */
 
+
+/**
+ * @swagger
+ * /api/don-hang/quan-ly:
+ *  get:
+ *      summary: Lấy danh sách tất cả đơn hàng
+ *      tags: [DonHang]
+ *      responses:
+ *          200:
+ *              description: Danh sách đơn hàng
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              success:
+ *                                  type: boolean
+ *                                  description: Trạng thái trả về
+ *                              data:
+ *                                  type: array
+ *                                  items:
+ *                                      type: object
+ *                                      properties:
+ *                                          ma_don_hang: 
+ *                                              type: string
+ *                                          ma_nguoi_dung: 
+ *                                              type: string
+ *                                          ten_nguoi_dung:
+ *                                              type: string
+ *                                          ten_nguoi_nhan: 
+ *                                              type: string
+ *                                          dia_chi: 
+ *                                              type: string
+ *                                          ngay_mua:
+ *                                              type: string
+ *                                          tinh_trang_don_hang: 
+ *                                              type: string
+ *  
+ */
+router.get('/quan-ly', async (req, res) => {
+    try {
+        var collectionDonHang = db.collection('DonHang');
+        var data = await collectionDonHang.get();
+        return res.json({
+            success: true, data: data.docs.map((value) => {
+                let item = value.data();
+                item.ma_don_hang = value.id;
+                return item;
+            })
+        });
+    }
+    catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
+});
 /**
  * @swagger
  * /api/don-hang:
