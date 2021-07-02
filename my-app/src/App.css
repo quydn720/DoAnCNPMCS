@@ -36,10 +36,20 @@
     transform: rotate(360deg);
   }
 }
-h1{
-
+h1 {
   margin-block-start: 0em;
   margin-block-end: 0em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
+}
+a {
+  text-decoration: none;
+}
+
+/* ===========Home Page=================== */
+.popular {
+  margin: 50px 0;
+}
+Link {
+  text-decoration: none;
 }

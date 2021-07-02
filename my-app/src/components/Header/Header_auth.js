@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import '../Home_pageCSS/Header_auth.css';
+import '../../Home_pageCSS/Header_auth.css';
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom'; 
-import Login_page from '../Login_page/Login_page';
+import Login_page from '../../Login_page/Login_page';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const Header_auth = () => {
-    //let history=useHistory();
+    let history=useHistory();
     // const orders='/Orders_page';
     // function handleClick(a) {
     //     history.push(a);
@@ -18,9 +18,9 @@ const Header_auth = () => {
     useEffect(()=>{
         async function Data(){
           axios.get('http://localhost:3001/api/nguoi-dung/thong-tin', { withCredentials: true }).then((res) => {
-          console.log(res.data.success)
+          console.log(res.data.data)
           setAccount(res.data.data);
-  
+          localStorage.setItem('user',JSON.stringify(res.data.data))
         })
         }
         Data();
@@ -28,7 +28,8 @@ const Header_auth = () => {
     function Logout(){
         localStorage.removeItem('access_token');
         alert("Log out Success!!!!")
-        
+        localStorage.removeItem('loai-nguoi-dung');
+        history.push("/Login_page");
     }
     return (
         <div className="header_auth">
@@ -55,7 +56,7 @@ const Header_auth = () => {
                         </li>
 
                         <li>
-                            <a href="#" class="nav-link text-secondary">
+                            <a href="/Dashboard" class="nav-link text-secondary">
                                 Dashboard
                             </a>
                         </li>
@@ -67,7 +68,7 @@ const Header_auth = () => {
                         </li>
 
                         <li>
-                            <a href="/" class="nav-link text-secondary">
+                            <a href="/Product_page" class="nav-link text-secondary">
                                 Products
                             </a>
                         </li>
@@ -79,9 +80,6 @@ const Header_auth = () => {
                         </li>
                     </ul>
                     <button type="button" class="btn btn-outline-light me-2" onClick={Logout}>Log out</button>
-                    <form class="col-12 col-lg auto mb-3 mb-lg-0 me-lg-3">
-                        <input type="search" class="form-auth-control" placeholder="Search..."></input>
-                    </form>
 
                 </div>
                 )}

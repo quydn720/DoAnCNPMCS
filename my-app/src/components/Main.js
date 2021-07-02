@@ -3,9 +3,6 @@ import React, { useState,useEffect } from 'react';
 import Slider from 'react-slick'
 import Carousel from 'react-elastic-carousel';
 import '../Home_pageCSS/Main.css';
-import image1 from '../assets/images/product2.jpg';
-import image2 from '../assets/images/laptop_zenbook.jpg';
-import image3 from '../assets/images/product1.jpg';
 import useFetch from './fetch'
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -19,25 +16,30 @@ import { Link } from 'react-router-dom';
       const settings = {
         dots: true,
         infinite: true,
+        slidesToShow: 4,
+        autoplay: true,
         speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1
+        autoplaySpeed: 2000,
+        cssEase: "linear",
+        lazyLoad: true,
       };
-    const [productList,setProductList]=useState()
-    useEffect(() => {
-        async function fetchData(){
-            const requestUrl='http://localhost:3001/api/san-pham'
-            const respone= await fetch(requestUrl);
-            const responseJson= await respone.json();
-            const {data} =responseJson;
-            setProductList(data);
-            // console.log(data)
-        }
-        fetchData();
-    }, [])
-    // const { data :productList, pending, error}=useFetch(
-    //     "http://localhost:3001/api/san-pham"
-    // )
+    // const [productList,setProductList]=useState()
+    // http://localhost:3001/api/san-pham
+    // useEffect(() => {
+    //     async function fetchData(){
+    //         const requestUrl='http://localhost:3001/api/san-pham'
+    //         const respone= await fetch(requestUrl);
+    //         const responseJson= await respone.json();
+    //         const {data} =responseJson;
+    //         // console.log(data)
+    //         setProductList(data);
+    //     }
+    //     fetchData();
+    // }, [])
+    
+    const { data : productList}=useFetch(
+        "http://localhost:3001/api/san-pham"
+    )
     return (
         <div class="container2">
              <li class="font">Items</li>

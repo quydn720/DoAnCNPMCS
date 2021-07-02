@@ -1,36 +1,24 @@
 import React from 'react';
-import Header from '../components/Header';
 import Main from '../components/Main';
-import Footer from '../components/Footer';
 import Slider from '../components/Slider';
 import Product from '../components/Products';
 import Laptop from '../components/Popular_Laptop';
 import Phone from '../components/Popular_phone';
 import { Component } from 'react';
+import Autho from '../components/Authorization/Authorization_Header'
 import axios from 'axios';
-import connect from 'react-redux';
+import ScrolltoTop from '../components/ScrolltoTop/ScrolltoTop';
 class Home_page extends Component {
-   constructor(props){
-       super(props);
-       this.state = {
-           
-       }
-   }
-    componentDidMount(){
-        axios({
-            method:"GET",
-            url: ''
-        })
-    }
-
     render(){
         return (
             <div>
+            <Autho/>
             <Slider/>
             <Main/>
             <Product/>
             <Laptop/>
             <Phone/>
+            <ScrolltoTop/>
             </div>
         );
     }
