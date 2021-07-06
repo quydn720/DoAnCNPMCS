@@ -7,6 +7,7 @@ import Product__board from './Product__board/Product__board';
 import Total__orders from './Total__orders/Total__orders';
 import Report__board from './Report__board/Report__board';
 import Total__chart from './Total__chart/Total__chart';
+import Account__page from './Account__page/Account__page';
 function Dashboard_page(props) {
     return (
         <div>
@@ -30,6 +31,11 @@ function Dashboard_page(props) {
                             Báo cáo doanh thu
                         </Nav.Link>
                     </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="/Dashboard/" href="/Dashboard/Account__page" >
+                            Quản lý tài khoản
+                        </Nav.Link>
+                    </Nav.Item>
                 </Nav>
             </>
             <>
@@ -50,6 +56,11 @@ function Dashboard_page(props) {
                         path="/Dashboard/Report__board"
                         component={Report__board}
                     ></Route>
+                    <Route
+                        path="/Dashboard/Account__page"
+                        component={Account__page}
+                    ></Route>
+
 
                     <Route path="/Dashboard" component={Total__chart}></Route>
                 </Switch>

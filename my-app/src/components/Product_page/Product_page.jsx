@@ -85,7 +85,7 @@ function Product__page(props) {
     };
     const [Data, setData] = useState([]);
     useEffect(() => {
-        if (localStorage.getItem('loai-nguoi-dung') === 'KhachHang') {
+        if (localStorage.getItem('loai-nguoi-dung') === 'QuanLy') {
             setAdmin(true)
         }
     }, [])

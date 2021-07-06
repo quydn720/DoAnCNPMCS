@@ -10,6 +10,7 @@ const Total__chart = () => {
   const[Laptopp, setLaptop] = useState(0);
   const [Phone, setPhone] = useState(0);
   const [Others, setOther]= useState(0);
+  const [account, setAccount] = useState(0);
   const [report , setReport] = useState([]);
   useEffect(()=>{
     async function getData(){
@@ -50,6 +51,12 @@ const Total__chart = () => {
                 ).then(resp=>{
                   resp.data.data.map(
                     (item,index) => setOther(index +1)
+                  )
+                })
+                axios.get('http://localhost:3001/api/nguoi-dung/quan-ly', {withCredentials: true}
+                ).then(resp=>{
+                  resp.data.data.map(
+                    (item,index) => setAccount(index +1)
                   )
                 })
 
@@ -207,7 +214,7 @@ const Total__chart = () => {
                     labels: ['Tổng sản phẩm', 'Tổng đơn hàng', 'Tổng số tài khoản khách hàng'],
                     datasets: [{
                         label: 'Tổng',
-                        data: [TongSanPham, TongDonHang, 10],
+                        data: [TongSanPham, TongDonHang, account],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',
