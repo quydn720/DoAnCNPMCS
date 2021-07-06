@@ -14,13 +14,17 @@ const Product__board: React.FC = () => {
             const responseJson = await respone.json();
             const { data } = responseJson;
             setData(data);
-            console.log(data)
-            console.log(i);
+
             setLoading(true)
         }
         fetchData();
     }, [])
 
+    useEffect(() => {
+        var sum = getData.map(
+            (item, index) => setI(index + 1)
+        )
+    })
     const FilterOptions: FilterSettingsModel = {
         type: 'Menu'
     };
@@ -37,6 +41,7 @@ const Product__board: React.FC = () => {
                 </ColumnsDirective>
                 <Inject services={[Filter, Page]} />
             </GridComponent>
+            <h2 style={{ textAlign: 'right', color: 'red' }}>Tổng sản phẩm: {i}</h2>
         </div>
     )
 };

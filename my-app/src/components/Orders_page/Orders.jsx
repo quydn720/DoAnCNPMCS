@@ -2,13 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Header from "../Header/Header";
 import Footer from "../Footer";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link,
-  Redirect,
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./Orders.css";
 import Order__item from "./Order__item/Order__item";
 import Buy__item from "./Buy__item/Buy__item";
@@ -25,6 +19,8 @@ function Orders(props) {
   const [orders, setOrders] = useState([]);
   const [cartItem, setCartItem] = useState([]);
   const [user, setUser] = useState(null);
+  const history = useHistory();
+  const [checkOders, setCheckOders] = useState(false);
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user")));
     async function Data() {
@@ -41,6 +37,7 @@ function Orders(props) {
 
   function onAdd(id, product) {
     setCartItem([...cartItem, { ...product }]);
+    setCheckOders(true)
   }
   function onRemove(id, product) {
     console.log(id);
@@ -49,6 +46,7 @@ function Orders(props) {
     if (exist) {
       setCartItem(cartItem.filter((x) => x.ma_san_pham !== id));
     }
+    setCheckOders(false);
   }
   function onDelete(id) {
     setOrders(orders.filter((order) => order.ma_san_pham !== id));
@@ -59,32 +57,43 @@ function Orders(props) {
     axios.delete("http://localhost:3001/api/gio-hang", {
       data: { ma_san_pham: id },
     });
+    setCheckOders(false);
   }
 
   //Lap don hang
   const handlePayment = async () => {
-    if (user) {
-      await axios
-        .post(
-          "http://localhost:3001/api/gio-hang/thanh-toan",
-          {
-            ten_nguoi_nhan: user.ten_nguoi_dung,
-            so_dien_thoai: user.so_dien_thoai,
-            dia_chi: user.dia_chi,
-            email: user.email,
-          },
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    if (checkOders) {
+      if (user) {
+        await axios
+          .post(
+            "http://localhost:3001/api/gio-hang/thanh-toan",
+            {
+              ten_nguoi_nhan: user.ten_nguoi_dung,
+              so_dien_thoai: user.so_dien_thoai,
+              dia_chi: user.dia_chi,
+              email: user.email,
+            },
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
+            console.log(res);
+            history.push("/Purchase__page")
+
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }
+    else {
+      alert("Giỏ hàng chưa có sản phẩm để tiến hành thanh toán")
     }
   };
+  function ContinueSee() {
+    history.push("/Product_page");
+  }
   return (
     <>
       <Authorization_Header />
@@ -95,10 +104,16 @@ function Orders(props) {
               <h3 className="title__name">GIỎ HÀNG</h3>
               <div className="title__wrap">
                 <div className="title__wrap-left">
-                  Sản phẩm đã được thêm vào giỏ hàng
+                  {
+                    checkOders ?
+                      <i id="ID" className="fas fa-check"> Sản phẩm đã được thêm vào giỏ hàng
+                      </i>
+                      :
+                      <i className="fas fa-ban"> Chưa có sản phẩm nào được thêm</i>
+                  }
                 </div>
                 <div className="title__wrap-right">
-                  <button className="">Tiếp tục xem sản phẩm</button>
+                  <button className="" onClick={ContinueSee}>Tiếp tục xem sản phẩm</button>
                 </div>
               </div>
             </div>

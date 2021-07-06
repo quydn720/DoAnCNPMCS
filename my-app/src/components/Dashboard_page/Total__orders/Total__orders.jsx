@@ -1,34 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import './Customer__orders.css'
+import { VariantContext } from '@material-ui/pickers/wrappers/Wrapper';
 import axios from 'axios';
-import { Link, Route, Switch } from 'react-router-dom';
-import Detail___orders from '../../Detail___orders/Detail___orders';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Loading from '../../Loading_page/Loading';
-//import Detail___orders from '../../Detail___orders/Detail___orders';
-
-function Customer__orders(props) {
-
-    //   useEffect(()=>{
-
-    //     axios.get("http://localhost:9001/api/don-hang", {withCredentials:true} )
-    //     .then(resp=>{
-    //         console.log(resp.data.data)
-    //         setData(resp.data.data[0])
-
-
-    //     })
-
-    //   },[]);
+import './Total__orders.css';
+const Total__orders = () => {
     const [loading, setLoading] = useState(false);
     const [getData, setData] = useState([]);
     const [dataSP, setDataSP] = useState([]);
+    const [num, setNum] = useState(0);
     async function Data() {
-        axios.get('http://localhost:3001/api/don-hang', { withCredentials: true })
+        axios.get('http://localhost:3001/api/don-hang/quan-ly', { withCredentials: true })
             .then(resp => {
                 setData(resp.data.data)
                 setDataSP(resp.data.data.sanPham)
-                localStorage.setItem('ID_don_hang', resp.data.data)
                 setLoading(true);
+                var sum = resp.data.data.map(
+                    (item, index) => setNum(index + 1)
+                )
+
+
+
             })
     }
     useEffect(() => {
@@ -37,27 +29,33 @@ function Customer__orders(props) {
 
     return (
         <div>
+
             <>
                 {loading ?
                     <>
-                        <div className="Customer__orders"  >
-                            <h2>Đơn hàng</h2>
-
+                        <div className="Total__orders"  >
+                            <br />
                             <table className="table table-bordered">
                                 <thead>
                                     <tr>
+                                        <th>No</th>
                                         <th>Mã đơn hàng</th>
-                                        <th>Tên khách hàng</th>
+                                        <th>Mã khách hàng</th>
+                                        <th>Tài khoản</th>
+                                        <th>Email</th>
                                         <th>Trạng thái</th>
                                         <th>Chi tiết</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
-                                        getData && getData.map(Donhang => (
+                                        getData && getData.map((Donhang, index) => (
                                             <tr>
+                                                <td id="index">{index}</td>
                                                 <td>{Donhang.ma_don_hang}</td>
+                                                <td>{Donhang.ma_nguoi_dung}</td>
                                                 <td>{Donhang.ten_nguoi_nhan}</td>
+                                                <td>{Donhang.email}</td>
                                                 <td>{Donhang.tinh_trang_don_hang}</td>
                                                 <td>
                                                     <Link to={`/Customer_page/Detail___orders/${Donhang.ma_don_hang}`}>
@@ -66,7 +64,9 @@ function Customer__orders(props) {
                                                         </button>
                                                     </Link>
                                                 </td>
+
                                             </tr>
+
                                         ))
                                     }
 
@@ -74,25 +74,17 @@ function Customer__orders(props) {
                             </table>
 
                         </div>
+                        <div>
+                            <h2 style={{ textAlign: 'center', color: 'red' }}>Tổng số đơn hàng: {num}</h2>
+                        </div>
 
                     </>
                     : <Loading />
                 }
 
             </>
-            <>
-
-                <Switch>
-                    <Route
-                        path="/Customer_page/Detail___orders/:id"
-                        component={Detail___orders}
-                    ></Route>
-                </Switch>
-            </>
-        </div>
+        </div >
     );
+};
 
-
-}
-
-export default Customer__orders;
+export default Total__orders;

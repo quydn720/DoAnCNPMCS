@@ -44,7 +44,7 @@ const Products = () => {
                             <div className="text">
                                 {
                                     product.gia_tien
-                                }
+                                }$
                             </div>
                             <button className="btbuy">
                                 Buy Now

@@ -13,10 +13,6 @@
     background-color: whitesmoke;
 }
 
-.container a {
-    text-decoration: none;
-}
-
 .popular .container .card {
     margin: 20px 0px;
     background-color: white;
@@ -89,4 +85,8 @@ h5 {
         grid-template-columns: repeat(1, 1fr);
         margin-bottom: 125cm;
     }
+}
+
+.container a {
+    text-decoration: none;
 }

@@ -53,7 +53,7 @@ import { Link } from 'react-router-dom';
                                 <img src={product.file} alt="Image1"/>
                                 <div class="text">
                                     <h3>{product.ten_san_pham}</h3>
-                                    <p>{product.gia_tien}</p>
+                                    <p>{product.gia_tien}$</p>
                                     <button >Buy now</button>
                                 </div>
                             </div>

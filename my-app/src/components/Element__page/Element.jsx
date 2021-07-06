@@ -10,6 +10,10 @@ import useFetch from "../fetch";
 import { useHistory, useParams } from "react-router-dom";
 import { data } from "jquery";
 import axios from "axios";
+import Authorization_Header from "../Authorization/Authorization_Header";
+import ScrolltoTop from "../ScrolltoTop/ScrolltoTop";
+import Product__board from "../Dashboard_page/Product__board/Product__board";
+
 Element.propTypes = {
   post: PropTypes.object,
 };
@@ -110,92 +114,103 @@ function Element(props) {
   }
 
   return (
-    <div className="element">
-      {product && (
-        <div>
-          <div className="element__detail">
-            <div className="container">
-              <div className="element__detail-tag">
-                <div className="tag__top">
-                  Điện thoại {">"} Điện thoại Samsung
-                </div>
-                <div className="tag__bottom">Điện thoại Samsung Galaxy M51</div>
-              </div>
-              <div className="element__detail-product">
-                <div className="product__image">
-                  <div className="image__top">
-                    <img src={image}></img>
+    <>
+      <Authorization_Header />
+      <div className="element">
+        {product && (
+          <div>
+            <div className="element__detail">
+              <div className="container">
+                <div className="element__detail-tag">
+                  <div className="tag__top">
+                    {product.loai_san_pham} {">"} {product.ten_thuong_hieu}
                   </div>
-                  <ul className="image__small">
-                    {product.file != null &&
-                      product.file.map((file, index) => (
-                        <img
-                          key={index}
-                          onClick={() => setImage(product.file[index])}
-                          className="image__small-element"
-                          src={product.file && product.file[index]}
-                          alt=""
-                        />
-                      ))}
-                  </ul>
+                  <div className="tag__bottom">{product.ten_san_pham}</div>
                 </div>
-                <div className="product__info">
-                  <h3>{product.ten_san_pham}</h3>
-                  <div>Giá:{product.gia_tien}</div>
-                  <div>Tình trạng:{product.tinh_trang_san_pham}</div>
-                  {/* <div className="information">Thông tin:</div> */}
-                  <div className="product__info-color">
-                    <span>Màu:</span>
-                    <button
-                      className="grey color"
-                      style={{ backgroundColor: "blue" }}
-                    ></button>
-                    <button
-                      className="white color"
-                      style={{ backgroundColor: "red" }}
-                    ></button>
-                    <button
-                      className="red color"
-                      style={{ backgroundColor: "grey" }}
-                    ></button>
+                <div className="element__detail-product">
+                  <div className="product__image">
+                    <div className="image__top">
+                      <img src={image}></img>
+                    </div>
+                    <ul className="image__small">
+                      {product.file != null &&
+                        product.file.map((file, index) => (
+                          <img
+                            key={index}
+                            onClick={() => setImage(product.file[index])}
+                            className="image__small-element"
+                            src={product.file && product.file[index]}
+                            alt=""
+                          />
+                        ))}
+                    </ul>
                   </div>
-                  <div>
-                    <button className="add__button" onClick={handleAddProduct}>
-                      Thêm vào giỏ hàng
-                    </button>
+                  <div className="product__info">
+                    <h3>{product.ten_san_pham}</h3>
+                    <div>Giá:{product.gia_tien}</div>
+                    <div>Tình trạng:{product.tinh_trang_san_pham}</div>
+                    {/* <div className="information">Thông tin:</div> */}
+                    <div className="product__info-color">
+                      <span>Màu:</span>
+                      <button
+                        className="grey color"
+                        style={{ backgroundColor: "blue" }}
+                      ></button>
+                      <button
+                        className="white color"
+                        style={{ backgroundColor: "red" }}
+                      ></button>
+                      <button
+                        className="red color"
+                        style={{ backgroundColor: "grey" }}
+                      ></button>
+                    </div>
+                    <div>
+                      <button className="add__button" onClick={handleAddProduct}>
+                        Thêm vào giỏ hàng
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div className="product__guarantee">
-                  <div>Bảo hành và dịch vụ</div>
+                  <div className="product__guarantee">
+                    <div>Bảo hành và dịch vụ</div>
+                    <li className="BH"> Đảm bảo độ uy tín của sản phẩm. </li>
+                    <li className="BH"> Bảo hành trong vòng 1 tháng khi sản phẩm có lỗi về kĩ thuật </li>
+                    <li className="BH"> Cam kết hàng chính hãng 100%. </li>
+                    <li className="BH"> Miễn phí vệ sinh laptop trong thời gian bảo hành. </li>
+                    <li className="BH"> Hỗ trợ cài đặt hệ điều hành và phần mềm. </li>
+                    <li className="BH"> Linh kiện nâng cấp bảo hành theo tiêu chuẩn nhà sản xuất. </li>
+                    <li className="BH"> Đảm bảo độ uy tín của sản phẩm </li>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="wrap">
-            <div className="container">
-              <div className="wrap__top">
-                <div className="demo">
-                  <div className="demo__info" onClick={infoHandle}>
-                    Thông tin sản phẩm
-                  </div>
-                  <div className="demo__description" onClick={desHandle}>
-                    Mô tả sản phẩm
+            <div className="wrap">
+              <div className="container">
+                <div className="wrap__top">
+                  <div className="demo">
+                    <div className="demo__info" onClick={infoHandle}>
+                      Thông tin sản phẩm
+                    </div>
+                    <div className="demo__description" onClick={desHandle}>
+                      Mô tả sản phẩm
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="wrap__bottom">
-                <div className="wrap__bottom-info visible">
-                  {product.cau_hinh}
+                <div className="wrap__bottom">
+                  <div className="wrap__bottom-info visible">
+                    {product.cau_hinh}
+                  </div>
+                  <div className="wrap__bottom-description">{product.mo_ta}</div>
                 </div>
-                <div className="wrap__bottom-description">{product.mo_ta}</div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-      <Main></Main>
-    </div>
+        )}
+        <Main></Main>
+      </div>
+      <ScrolltoTop />
+    </>
   );
 }
 

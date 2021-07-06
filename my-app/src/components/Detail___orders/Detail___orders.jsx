@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import './Detail___orders.css';
 import Loading from '../Loading_page/Loading';
 function Detail___orders(props) {
@@ -49,7 +49,13 @@ function Detail___orders(props) {
 
                                 <>
                                     <Form.Group controlId="exampleForm.ControlTextarea1">
-                                        <Form.Label>Mã Sản phẩm: {getData.san_pham[index].ma_san_pham}</Form.Label>
+                                        <Form.Label>
+                                            Mã Sản phẩm: <Link to={`/Element_page/${getData.san_pham[index].ma_san_pham}`}>
+                                                {getData.san_pham[index].ma_san_pham}
+                                            </Link>
+
+
+                                        </Form.Label>
 
                                     </Form.Group>
                                     <Form.Group controlId="exampleForm.ControlInput4">

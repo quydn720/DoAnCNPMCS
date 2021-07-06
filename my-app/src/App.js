@@ -13,6 +13,7 @@ import Customer from './components/Customer_page/Customer';
 import Element from './components/Element__page/Element'
 import Product__page from './components/Product_page/Product_page';
 import Dashboard_page from './components/Dashboard_page/Dashboard_page';
+import Purchase from './components/Purchase__page/Purchase__page';
 axios.defaults.withCredentials = true;
 function App(props) {
     
@@ -35,6 +36,7 @@ function App(props) {
           }}></Route>
           <Route key="product" path="/Product_page" component={Product__page}/>
           <Route key="dashboard" path="/Dashboard" component={Dashboard_page}/>
+          <Route key="purchase" path="/Purchase__page" component={Purchase} ></Route>
           
         </Switch>
         <Footer></Footer>

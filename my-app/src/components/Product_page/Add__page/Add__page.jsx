@@ -49,7 +49,7 @@ function Add__page(props) {
         }
         else if (document.getElementById("MaLoaiSP").value === "Tai nghe") {
             setMa("R0RHNpwSnk0K3pTF9wtp");
-            console.log("Ipad")
+            //console.log("Ipad")
         }
         else {
             setMa("LUvHhrXge1xlJDtTmsBd");
@@ -80,29 +80,28 @@ function Add__page(props) {
         formData.append("file", image);
 
         console.log()
-        // if(check)
-        // {
-        axios({
-            withCredentials: true,
-            method: 'post',
-            data: formData,
-            url: 'http://localhost:3001/api/san-pham',
-        }).then(resp => {
-            console.log(resp.data)
-            if (resp.data.success) {
-                alert("Thành công thêm sản phẩm")
-                history.goBack();
-                setCheck(false)
-            }
-            else {
-                alert("Thêm sản phẩm không thành công")
+        if (check) {
+            axios({
+                withCredentials: true,
+                method: 'post',
+                data: formData,
+                url: 'http://localhost:3001/api/san-pham',
+            }).then(resp => {
+                console.log(resp.data)
+                if (resp.data.success) {
+                    alert("Thành công thêm sản phẩm")
+                    history.goBack();
+                    setCheck(false)
+                }
+                else {
+                    alert("Thêm sản phẩm không thành công")
 
-            }
-        })
-        // }
-        // else{
-        //     CheckProduct();
-        // }
+                }
+            })
+        }
+        else {
+            CheckProduct();
+        }
 
 
     }

@@ -46,7 +46,7 @@ function Customer(props) {
               <a href="/">Trang chủ </a>
             </span>
             <span>
-              <a href="/Customer_page"> {">"} Khách hàng</a>
+              <a href="/Customer_page"> {">"} Quản lý</a>
             </span>
           </div>
         </div>

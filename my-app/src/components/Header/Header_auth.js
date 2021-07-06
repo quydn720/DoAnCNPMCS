@@ -56,12 +56,6 @@ const Header_auth = () => {
                         </li>
 
                         <li>
-                            <a href="/Dashboard" class="nav-link text-secondary">
-                                Dashboard
-                            </a>
-                        </li>
-
-                        <li>
                             <a href="/Orders_page" class="nav-link text-secondary">
                                 Orders
                             </a>

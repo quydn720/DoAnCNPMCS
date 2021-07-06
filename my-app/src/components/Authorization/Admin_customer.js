@@ -11,7 +11,7 @@ export default function Admin_customer(){
         console.log(localStorage.getItem('access_token'))
         if(localStorage.getItem('access_token')!=null)
         {
-            if(localStorage.getItem('loai-nguoi-dung') === 'KhachHang'  ){
+            if(localStorage.getItem('loai-nguoi-dung') === 'QuanLy'  ){
             setAdmin({
                 admin: true 
             })

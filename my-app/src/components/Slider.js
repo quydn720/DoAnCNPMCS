@@ -1,13 +1,14 @@
 import React from 'react';
 import image1 from '../assets/images/banner1.png';
-import image2 from '../assets/images/banner3.png';
-import image3 from '../assets/images/banner4.png';
-import { Accordion } from 'react-bootstrap';
-import { Jumbotron } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-import { Carousel } from 'react-bootstrap';
 import '../Home_pageCSS/Slider.css';
+import { useHistory } from 'react-router-dom';
 const Slider = () => {
+  const history =useHistory();
+  function handleClick()
+  {
+    history.push("/Product_page")
+  }
     return (
       <div class="container1">
         <div class="contain-banner">
@@ -18,7 +19,7 @@ const Slider = () => {
             </p>
           
             <p>
-              <Button variant="primary">Explore more</Button>
+              <Button onClick={handleClick} variant="primary">Explore more</Button>
             </p>
         </div>   
       </div>
