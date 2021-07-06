@@ -85,7 +85,7 @@ const sanPhamUpdateSchema = require('../../schemas/sanPhamUpdateSchema');
  */
 router.get('/', async (req, res) => {
     var collectionSanPham = db.collection('SanPham');
-    if (req.query.loai_san_pham)
+    if (req.query.ma_loai_san_pham)
         collectionSanPham = collectionSanPham.where('ma_loai_san_pham', '==', req.query.ma_loai_san_pham);
     if (req.query.gia_tien_min)
         collectionSanPham = collectionSanPham.where('gia_tien', '>=', req.query.gia_tien_min);

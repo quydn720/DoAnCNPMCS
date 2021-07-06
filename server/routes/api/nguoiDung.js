@@ -14,6 +14,99 @@ var signUpSchema = require('../../schemas/signUpSchema');
 
 /**
  * @swagger
+ * /api/nguoi-dung/quan-ly:
+ *  get:
+ *      summary: Lấy danh sách tài khoản
+ *      tags: [NguoiDung]
+ *      responses:
+ *          200:
+ *              description: Danh sách tài khoản
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              success:
+ *                                  type: boolean
+ *                                  description: Trạng thái trả về
+ *                              data:
+ *                                  type: array
+ *                                  items:
+ *                                      type: object
+ *                                      properties:
+ *                                          ma_nguoi_dung: 
+ *                                              type: string
+ *                                          ten_nguoi_dung: 
+ *                                              type: string
+ *                                          ten_tai_khoan: 
+ *                                              type: string
+ *                                          email: 
+ *                                              type: string
+ *                                          dia_chi:
+ *                                              type: string
+ *                                          so_dien_thoai:
+ *                                              type: string
+ * 
+ */
+router.get('/quan-ly', ensureAuthenticated, async (req, res) => {
+    let data = await db.collection('NguoiDung').get();
+    let result = data.docs.map((item) => {
+        return {
+            ma_nguoi_dung: item.id,
+            ten_nguoi_dung: item.data().ten_nguoi_dung,
+            ten_tai_khoan: item.data().ten_tai_khoan,
+            email: item.data().email,
+            dia_chi: item.data().dia_chi,
+            so_dien_thoai: item.data().so_dien_thoai,
+            loai_nguoi_dung: item.data().loai_nguoi_dung,
+        };
+    });
+    return res.json({ success: true, data: result });
+});
+
+/**
+ * @swagger
+ * /api/nguoi-dung/quan-ly:
+ *  delete:
+ *      summary: Xoá tài khoản
+ *      tags: [NguoiDung]
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/x-www-form-urlencoded:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                         ma_nguoi_dung:
+ *                             type: string
+ *                      required:
+ *                          ma_nguoi_dung
+ *      responses:
+ *          200:
+ *              description: Trạng thái trả về
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              success:
+ *                                  type: boolean
+ *                                  description: Trạng thái trả về
+ * 
+ */
+router.delete('/quan-ly', ensureAuthenticated, async (req, res) => {
+    try {
+        await auth.deleteUser(req.body.ma_nguoi_dung);
+        await db.collection('NguoiDung').doc(req.body.ma_nguoi_dung).delete();
+        return res.json({ success: true });
+    }
+    catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
+});
+
+/**
+ * @swagger
  * /api/nguoi-dung/thong-tin:
  *  get:
  *      summary: Lấy thông tin tài khoản
