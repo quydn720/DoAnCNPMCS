@@ -18,6 +18,11 @@
     transition: all 0.3s linear;
 }
 
+.item__element .text h3 {
+    height: 100px;
+    /* overflow: hidden; */
+}
+
 .item__element:hover {
     cursor: pointer;
 }
@@ -25,12 +30,13 @@
 .slick-slide div {
     padding: 5px 15px;
     overflow: hidden;
+    /* height: 200px; */
 }
 
 .container2 .slick-slide img {
-    /* display: block; */
+    height: 200px;
     width: 90%;
-    /* object-fit: cover; */
+    object-fit: cover;
     transition: all 0.3s linear;
 }
 

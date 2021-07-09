@@ -15,11 +15,11 @@ const Slider = () => {
             <h1>Welcome to TI' Store!</h1>
             <img class="img" src={image1}/>
             <p>             
-              Come to TI' Store on this occasion to get a 50% discount. 
+              
             </p>
           
             <p>
-              <Button onClick={handleClick} variant="primary">Explore more</Button>
+              <Button onClick={handleClick} variant="primary">Khám phá ngay</Button>
             </p>
         </div>   
       </div>

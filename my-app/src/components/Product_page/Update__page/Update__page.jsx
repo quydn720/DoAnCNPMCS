@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import Element__update__info from './Element__update__info/Element__update__info';
 import Element__update from './Element__update/Element__update';
+import ScrolltoTop from '../../ScrolltoTop/ScrolltoTop';
 function Update__page(props) {
     const [getData, setData] = useState([]);
     useEffect(() => {
@@ -58,7 +59,7 @@ function Update__page(props) {
                         </div>
                     ))}
                 </div>
-
+                <ScrolltoTop />
 
             </div>
 

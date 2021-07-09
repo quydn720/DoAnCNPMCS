@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Form, Col } from 'react-bootstrap';
-
+import ScrolltoTop from '../../../ScrolltoTop/ScrolltoTop';
 function Element__update__info(props) {
     let { id } = useParams();
     let history = useHistory();
@@ -55,17 +55,20 @@ function Element__update__info(props) {
         }
 
     }
+    const handleBack = e => {
+        history.goBack();
+    }
     return (
         <div>
-            <div className="product-list" >
+            <div className="product-list" style={{ height: '750px' }}>
 
-                <div className="container_title">
+                <div className="product-container" style={{ display: 'flex', width: '150%' }}>
                     {products && (
                         <>
-                            <div className="item_element" id={products.ma_san_pham}>
-                                <div className="title">{products.ten_san_pham}</div>
+                            <div className="card" style={{ width: '120%', height: '50%', marginRight: '3%', marginBottom: '3%' }} id={products.ma_san_pham}>
+                                <div className="title"> <h2 style={{ textAlign: 'center' }}>{products.ten_san_pham}</h2></div>
                                 <br />
-                                <div className="img">
+                                <div className="img" style={{ textAlign: 'center' }}>
                                     <img src={products.file && products.file[0]}></img>
                                 </div>
                                 <div className="text">{products.gia_tien}$</div>
@@ -73,7 +76,7 @@ function Element__update__info(props) {
 
 
                             </div>
-                            <div className="container2">
+                            <div className="container2" style={{ width: '100%' }}>
                                 <div className="title">
                                     <Form.Group>
                                         <Form.Row>
@@ -157,12 +160,17 @@ function Element__update__info(props) {
                                             </Col>
                                         </Form.Row>
                                         <br />
+                                        <Form.Row><Form.Label column="lg" lg={5}>
+                                            Tập tin
+                                        </Form.Label>
+                                            <Col> <input type="file" id="ok" onChange={handleFile} accept="image/*"></input></Col>
 
-                                        <input type="file" id="ok" onChange={handleFile} accept="image/*"></input>
+
+                                        </Form.Row>
                                         <br />
                                         <div class="button" style={{ textAlign: "center" }}>
                                             <button className="btn btn-info mr-0" onClick={Update}>Cập nhật</button>
-                                            <button className="btn btn-danger mr-0">Hủy</button>
+                                            <button onClick={handleBack} className="btn btn-danger mr-0">Hủy</button>
                                         </div>
                                         <br />
 
@@ -177,6 +185,7 @@ function Element__update__info(props) {
                 </div>
 
             </div>
+            <ScrolltoTop />
         </div>
     );
 }

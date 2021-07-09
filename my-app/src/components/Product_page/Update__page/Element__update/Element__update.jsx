@@ -4,6 +4,7 @@ import { useHistory, useParams, Switch, Route, Link } from 'react-router-dom';
 import { Form, Col } from 'react-bootstrap'
 import Element__update__info from '../Element__update__info/Element__update__info';
 import './Element__update.css'
+import ScrolltoTop from '../../../ScrolltoTop/ScrolltoTop';
 function Element__update(props) {
     const { id } = useParams();
     const [products, setProduct] = useState({});
@@ -24,15 +25,15 @@ function Element__update(props) {
 
     return (
         <div>
-            <div className="product-list" >
+            <div className="product-list" style={{ height: '700px' }} >
 
-                <div className="container_title">
+                <div className="product-container" style={{ display: 'flex', width: '150%' }}>
                     {products && (
                         <>
-                            <div className="item_element" id={products.ma_san_pham}>
-                                <div className="title">{products.ten_san_pham}</div>
+                            <div className="card" style={{ width: '120%', height: '50%', marginRight: '3%', marginBottom: '3%' }} id={products.ma_san_pham}>
+                                <div className="title"> <h2 style={{ textAlign: 'center' }}>{products.ten_san_pham}</h2></div>
                                 <br />
-                                <div className="img">
+                                <div className="img" style={{ textAlign: 'center' }}>
                                     <img src={products.file && products.file[0]}></img>
                                 </div>
                                 <div className="text">{products.gia_tien}$</div>
@@ -40,7 +41,7 @@ function Element__update(props) {
 
 
                             </div>
-                            <div className="container2">
+                            <div className="container2" style={{ width: '100%' }}>
                                 <div className="title">
                                     <Form.Group>
                                         <Form.Row>
@@ -54,7 +55,7 @@ function Element__update(props) {
                                         <br />
                                         <Form.Row>
                                             <Form.Label column="lg" lg={3}>
-                                                Giá
+                                                Giá ($)
                                             </Form.Label>
                                             <Col>
                                                 <Form.Control size="lg" type="text" value={products.gia_tien} />
@@ -120,6 +121,7 @@ function Element__update(props) {
                                                 Thời gian đã sử dụng (năm)
                                             </Form.Label>
                                             <Col>
+
                                                 <Form.Control size="lg" type="text" value={products.thoi_gian_su_dung} />
                                             </Col>
                                         </Form.Row>
@@ -150,6 +152,7 @@ function Element__update(props) {
                 </div>
 
             </div>
+            <ScrolltoTop />
         </div>
     );
 }

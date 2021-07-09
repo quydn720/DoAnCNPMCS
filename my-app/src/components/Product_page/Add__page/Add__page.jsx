@@ -44,7 +44,7 @@ function Add__page(props) {
             console.log("Lapyop")
         }
         else if (document.getElementById("MaLoaiSP").value === "Phone") {
-            setMa("zgFsfEG1Dd5KP2S7ZD8");
+            setMa("zgFsfEG1Dd5KP2S7ZD8h");
             console.log("Phone")
         }
         else if (document.getElementById("MaLoaiSP").value === "Tai nghe") {
