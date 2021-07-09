@@ -25,9 +25,7 @@ function Element(props) {
     history.push(path);
   };
   const { id } = useParams();
-  const [image, setImage] = useState(
-    "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2xvdGhpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-  );
+
   const [product, setProduct] = useState({
     xuat_xu: "",
     file: [],
@@ -53,6 +51,17 @@ function Element(props) {
     }
     fetchData();
   }, [id]);
+  const [image, setImage] = useState(product.file[0]);
+  useEffect(() => {
+    async function ApiData() {
+      axios.get(`http://localhost:3001/api/san-pham/${id}`)
+        .then(resp => {
+          //setImage(resp.data.data.file)
+        })
+
+    }
+    ApiData();
+  })
 
   // lấy danh sách sản phẩm trong giỏ hàng
   const [count, setCount] = useState(0);
@@ -149,7 +158,7 @@ function Element(props) {
                     <h3>{product.ten_san_pham}</h3>
                     <div>Giá:{product.gia_tien}</div>
                     <div>Tình trạng:{product.tinh_trang_san_pham}</div>
-                    {/* <div className="information">Thông tin:</div> */}
+                    {<div className="information">Thông tin: {product.cau_hinh}</div>}
                     <div className="product__info-color">
                       <span>Màu:</span>
                       <button

@@ -151,7 +151,7 @@ const Total__chart = () => {
             <h2 style={{ textAlign: 'left', color: '#3bb3bb', marginLeft: '10%' }}>Số liệu</h2>
             <div   >
             <ReactApexChart options={options} series={series} type="donut" width={380} />
-            <ReactApexChart options={options1} series={series1} type="radialBar" height={390} />
+           
 
     
             </div>

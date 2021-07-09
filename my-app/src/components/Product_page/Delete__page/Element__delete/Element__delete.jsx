@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Form, Col } from 'react-bootstrap'
 import axios from 'axios';
+import ScrolltoTop from '../../../ScrolltoTop/ScrolltoTop';
 
 function Element__delete(props) {
     const { id } = useParams();
@@ -38,24 +39,24 @@ function Element__delete(props) {
     }
     return (
         <div>
-            <div className="product-list" >
+            <div className="product-list" style={{ height: '10%' }} >
 
-                <div className="product-container">
+                <div className="product-container" style={{ display: 'flex', width: '150%' }}>
                     {products && (
                         <>
-                            <div className="card" id={products.ma_san_pham}>
-                                <div className="title">{products.ten_san_pham}</div>
+                            <div className="card" style={{ width: '120%', marginRight: '3%', marginBottom: '3%' }} id={products.ma_san_pham}>
+                                <div className="title"> <h2 style={{ textAlign: 'center' }}>{products.ten_san_pham}</h2></div>
                                 <br />
-                                <div className="img">
+                                <div className="img" style={{ textAlign: 'center' }}>
                                     <img src={products.file && products.file[0]}></img>
                                 </div>
-                                <div className="text">{products.gia_tien}$</div>
+
                                 <br />
 
 
                             </div>
-                            <div className="container2">
-                                <div className="title">
+                            <div className="container2" style={{ width: '100%' }}>
+                                <div className="title"  >
                                     <Form.Group>
                                         <Form.Row>
                                             <Form.Label column="lg" lg={3}>
@@ -68,7 +69,7 @@ function Element__delete(props) {
                                         <br />
                                         <Form.Row>
                                             <Form.Label column="lg" lg={3}>
-                                                Giá
+                                                Giá ($)
                                             </Form.Label>
                                             <Col>
                                                 <Form.Control size="lg" type="text" value={products.gia_tien} />
@@ -106,6 +107,7 @@ function Element__delete(props) {
                 </div>
 
             </div>
+            <ScrolltoTop />
         </div>
     );
 }

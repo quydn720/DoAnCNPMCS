@@ -45,25 +45,25 @@ const Header_auth_admin = () => {
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         <li>
                             <a href="/" class="nav-link text-secondary">
-                                Home
+                                Trang chủ
                             </a>
                         </li>
 
                         <li>
                             <a href="/Dashboard" class="nav-link text-secondary">
-                                Dashboard
+                                Báo cáo
                             </a>
                         </li>
 
                         <li>
                             <a href="/Orders_page" class="nav-link text-secondary">
-                                Orders
+                                Giỏ hàng
                             </a>
                         </li>
 
                         <li>
                             <a href="/Product_page" class="nav-link text-secondary">
-                                Products
+                                Sản phẩm
                             </a>
                         </li>
 
@@ -73,7 +73,7 @@ const Header_auth_admin = () => {
                             </a>
                         </li>
                     </ul>
-                    <button type="button" class="btn btn-outline-light me-2" onClick={Logout}>Log out</button>
+                    <button type="button" class="btn btn-outline-light me-2" onClick={Logout}>Đăng xuất</button>
                     
 
                 </div>
